@@ -7,6 +7,17 @@ const store = createStore({
   modules: {
     artists: artistsModules,
     messages: messagesModules,
+  },
+  state() {
+    return {
+      // 確認是誰正在使用此 App
+      userId: 'a3'
+    };
+  },
+  getters: {
+    userId(state) {
+      return state.userId;
+    }
   }
 });
 

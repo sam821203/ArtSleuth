@@ -7,7 +7,7 @@
       <div class="controls"></div>
       <ul>
         <base-button mode="outline">Refresh</base-button>
-        <base-button link to="/register">Register</base-button>
+        <base-button link to="/register" v-if="!isArtist">Register</base-button>
       </ul>
       <ul v-if="hasArtists">
         <!-- 外層模板使用內層元件標籤時，以 v-bind 指令來將資料傳遞進來 -->
@@ -45,6 +45,9 @@ export default {
     };
   },
   computed: {
+    isArtist() {
+      return this.$store.getters["artists/isArtist"];
+    },
     filteredArtists() {
       const artists = this.$store.getters["artists/getArtists"];
 

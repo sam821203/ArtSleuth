@@ -8,7 +8,7 @@ export default {
     return {
       artists: [
         {
-          id: 'c1',
+          id: 'a1',
           firstName: 'Maximilian',
           lastName: 'Schwarzmüller',
           areas: ['frontend', 'backend', 'career'],
@@ -17,7 +17,7 @@ export default {
           hourlyRate: 30
         },
         {
-          id: 'c2',
+          id: 'a2',
           firstName: 'Julie',
           lastName: 'Jones',
           areas: ['frontend', 'career'],
