@@ -15,7 +15,10 @@ const router = createRouter({
     { path: '/', redirect: '/artists' },
     { path: '/artists', component: ArtistsList },
     {
-      path: '/artists/:id', component: ArtistsDetail, children: [
+      path: '/artists/:id',
+      component: ArtistsDetail,
+      props: true,
+      children: [
         { path: 'contact', component: ContactArtist }
       ]
     },
