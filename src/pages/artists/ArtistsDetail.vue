@@ -12,10 +12,10 @@
       <base-card>
         <h2>Interested? Reach out now!</h2>
         <base-button link :to="contactLink">Contact</base-button>
+        <!-- 這裡放 nested 的 contact form -->
+        <router-view></router-view>
       </base-card>
     </header>
-    <!-- 這裡放 nested 的 contact form -->
-    <router-view></router-view>
   </section>
 
   <!-- Badge -->

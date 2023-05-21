@@ -9,8 +9,6 @@ export default {
   isArtist(state, _, _2, rootGetters) {
     const artists = state.artists;
     const userId = rootGetters.userId;
-    console.log(artists);
-    console.log(userId);
     return artists.some(artist => artist.id === userId);
   }
 };

@@ -1,36 +1,80 @@
 <template>
   <form @submit.prevent="submitForm">
-    <div class="form-control">
+    <div class="form-control" :class="{ invalid: !firstName.isValid }">
       <label for="firstName">First name</label>
-      <input type="text" id="firstName" v-model.trim="firstName" />
+      <input
+        type="text"
+        id="firstName"
+        v-model.trim="firstName.val"
+        @blur="clearValidity('firstName')"
+      />
+      <p v-if="!firstName.isValid">First name must not be empty!</p>
     </div>
-    <div class="form-control">
+    <div class="form-control" :class="{ invalid: !lastName.isValid }">
       <label for="lastName">Last name</label>
-      <input type="text" id="lastName" v-model.trim="lastName" />
+      <input
+        type="text"
+        id="lastName"
+        v-model.trim="lastName.val"
+        @blur="clearValidity('lastName')"
+      />
+      <p v-if="!lastName.isValid">Last name must not be empty!</p>
     </div>
-    <div class="form-control">
+    <div class="form-control" :class="{ invalid: !description.isValid }">
       <label for="description">Description</label>
-      <textarea rows="5" id="description" v-model.trim="description"></textarea>
+      <textarea
+        rows="5"
+        id="description"
+        v-model.trim="description.val"
+        @blur="clearValidity('description')"
+      ></textarea>
+      <p v-if="!description.isValid">Description must not be empty!</p>
     </div>
-    <div class="form-control">
+    <div class="form-control" :class="{ invalid: !rate.isValid }">
       <label for="rate">Hourly Rate</label>
-      <input type="number" id="rate" v-model.number="rate" />
+      <input
+        type="number"
+        id="rate"
+        v-model.number="rate.val"
+        @blur="clearValidity('rate')"
+      />
+      <p v-if="!rate.isValid">Rate must not be empty!</p>
     </div>
-    <div class="form-control">
+    <div class="form-control" :class="{ invalid: !areas.isValid }">
       <h3>Areas of Expertise</h3>
       <div>
-        <input type="checkbox" value="frontend" id="frontend" v-model="areas" />
+        <input
+          type="checkbox"
+          value="frontend"
+          id="frontend"
+          v-model="areas.val"
+          @blur="clearValidity('areas')"
+        />
         <label for="frontend">Frontend Development</label>
       </div>
       <div>
-        <input type="checkbox" value="backend" id="backend" v-model="areas" />
+        <input
+          type="checkbox"
+          value="backend"
+          id="backend"
+          v-model="areas.val"
+          @blur="clearValidity('areas')"
+        />
         <label for="backend">Backend Development</label>
       </div>
       <div>
-        <input type="checkbox" value="career" id="career" v-model="areas" />
+        <input
+          type="checkbox"
+          value="career"
+          id="career"
+          v-model="areas.val"
+          @blur="clearValidity('areas')"
+        />
         <label for="career">Career Advisory</label>
       </div>
+      <p v-if="!areas.isValid">At least one expertise must be selected!</p>
     </div>
+    <p v-if="!formIsValid">Please fix above errors!</p>
     <base-button>Register</base-button>
   </form>
 </template>
@@ -40,21 +84,77 @@ export default {
   emits: ["save-data"],
   data() {
     return {
-      firstName: "",
-      lastName: "",
-      description: "",
-      rate: null,
-      areas: [],
+      firstName: {
+        val: "",
+        isValid: true,
+      },
+      lastName: {
+        val: "",
+        isValid: true,
+      },
+      description: {
+        val: "",
+        isValid: true,
+      },
+      rate: {
+        val: null,
+        isValid: true,
+      },
+      areas: {
+        val: [],
+        isValid: true,
+      },
+      formIsValid: true,
     };
   },
   methods: {
+    clearValidity(input) {
+      this[input].isValid = true;
+    },
+    validateForm() {
+      // 一開始先射程 true，以防止再上一個 submit 的狀態
+      this.formIsValid = true;
+
+      if (this.firstName.val === "") {
+        this.firstName.isValid = false;
+        this.formIsValid = false;
+      }
+
+      if (this.lastName.val === "") {
+        this.lastName.isValid = false;
+        this.formIsValid = false;
+      }
+
+      if (this.description.val === "") {
+        this.description.isValid = false;
+        this.formIsValid = false;
+      }
+
+      if (!this.rate.val || this.rate.val < 0) {
+        this.rate.isValid = false;
+        this.formIsValid = false;
+      }
+
+      if (this.areas.val.length === 0) {
+        this.areas.isValid = false;
+        this.formIsValid = false;
+      }
+    },
     submitForm() {
+      // 呼叫 validateForm 方法
+      this.validateForm();
+
+      // 如果 form 沒有被 validate，就 return 回去，以停止之後的動作
+      if (!this.formIsValid) {
+        return;
+      }
+
       const formData = {
-        first: this.firstName,
-        last: this.lastName,
-        desc: this.description,
-        rate: this.rate,
-        areas: this.areas,
+        first: this.firstName.val,
+        last: this.lastName.val,
+        desc: this.description.val,
+        rate: this.rate.val,
+        areas: this.areas.val,
       };
 
       this.$emit("save-data", formData);
