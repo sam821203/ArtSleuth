@@ -37,8 +37,8 @@ export default {
         return;
       }
 
-      // messages/contactArtist 前面是 namespaced，後面是 actions 名稱
-      this.$store.dispatch("messages/contactArtist", {
+      // requests/contactArtist 前面是 namespaced，後面是 actions 名稱
+      this.$store.dispatch("requests/contactArtist", {
         email: this.email,
         message: this.message,
         artistId: this.$route.params.id,

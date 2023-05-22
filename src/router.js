@@ -4,8 +4,8 @@ import ArtistsDetail from './pages/artists/ArtistsDetail.vue';
 import ArtistsList from './pages/artists/ArtistsList.vue';
 import ArtistsRegistration from './pages/artists/ArtistsRegistration.vue';
 
-import ContactArtist from './pages/messages/ContactArtist.vue';
-import MessagesReceive from './pages/messages/MessagesReceive.vue';
+import ContactArtist from './pages/requests/ContactArtist.vue';
+import RequestsReceive from './pages/requests/RequestsReceive.vue';
 
 import NotFound from './pages/NotFound.vue';
 
@@ -23,7 +23,7 @@ const router = createRouter({
       ]
     },
     { path: '/register', component: ArtistsRegistration },
-    { path: '/messages', component: MessagesReceive },
+    { path: '/requests', component: RequestsReceive },
     { path: '/:notFound(.*)', component: NotFound },
   ],
 });

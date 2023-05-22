@@ -4,7 +4,7 @@
       <h1><router-link to="/">ArtSleuth</router-link></h1>
       <ul>
         <li><router-link to="/artists">Our Artists</router-link></li>
-        <li><router-link to="/messages">Messages</router-link></li>
+        <li><router-link to="/requests">Messages</router-link></li>
       </ul>
     </nav>
   </header>

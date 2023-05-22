@@ -26,5 +26,30 @@ export default {
       ...artistData,
       id: userId
     });
+  },
+  async loadArtists(context) {
+    const response = await fetch('https://artsleuth-requests-4684a-default-rtdb.asia-southeast1.firebasedatabase.app/artists.json');
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      const error = new Error(responseData.message || 'Failed to fetch!');
+      throw error;
+    }
+
+    const artists = [];
+
+    for (const key in responseData) {
+      const artist = {
+        id: key,
+        firstName: responseData[key].firstName,
+        lastName: responseData[key].lastName,
+        description: responseData[key].description,
+        hourlyRate: responseData[key].hourlyRate,
+        areas: responseData[key].areas,
+      };
+      artists.push(artist);
+    }
+
+    context.commit('setArtists', artists);
   }
 }
