@@ -1,10 +1,10 @@
 <template>
-  <the-header></the-header>
-  <router-view></router-view>
+  <!-- 在痊癒可以不要加幣和標籤，加 '/' 即可。在 DOM 模板中，就必須使用閉合標籤 -->
+  <TheHeader />
+  <RouterView />
 </template>
-
 <script>
-import TheHeader from "./components/layout/TheHeader.vue";
+import TheHeader from './components/layout/TheHeader.vue';
 
 export default {
   components: {
