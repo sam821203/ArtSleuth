@@ -1,40 +1,42 @@
 <template>
-  <base-dialog title="An error occurred!" :show="!!error" @close="handleError">
-    <p>{{ error }}</p>
-  </base-dialog>
-  <section>
-    <artist-filter @change-filters="setFilters" />
-  </section>
-  <section>
-    <base-card>
-      <div class="controls">
-        <base-button mode="outline" @click="loadArtists(true)">
-          Refresh
-        </base-button>
-        <base-button v-if="!isArtist && !isLoading" link to="/register">
-          Register
-        </base-button>
-      </div>
-      <div v-if="isLoading">
-        <base-spinner />
-      </div>
-      <ul v-else-if="hasArtists">
-        <!-- 外層模板使用內層元件標籤時，以 v-bind 指令來將資料傳遞進來 -->
-        <artist-item
-          v-for="artist in filteredArtists"
-          :id="artist.id"
-          :key="artist.id"
-          :first-name="artist.firstName"
-          :last-name="artist.lastName"
-          :rate="artist.hourlyRate"
-          :areas="artist.areas"
-        />
-      </ul>
-      <h3 v-else>
-        No artists found!
-      </h3>
-    </base-card>
-  </section>
+  <div>
+    <base-dialog title="An error occurred!" :show="!!error" @close="handleError">
+      <p>{{ error }}</p>
+    </base-dialog>
+    <section>
+      <artist-filter @change-filters="setFilters" />
+    </section>
+    <section>
+      <base-card>
+        <div class="controls">
+          <base-button mode="outline" @click="loadArtists(true)">
+            Refresh
+          </base-button>
+          <base-button v-if="!isArtist && !isLoading" link to="/register">
+            Register
+          </base-button>
+        </div>
+        <div v-if="isLoading">
+          <base-spinner />
+        </div>
+        <ul v-else-if="hasArtists">
+          <!-- 外層模板使用內層元件標籤時，以 v-bind 指令來將資料傳遞進來 -->
+          <artist-item
+            v-for="artist in filteredArtists"
+            :id="artist.id"
+            :key="artist.id"
+            :first-name="artist.firstName"
+            :last-name="artist.lastName"
+            :rate="artist.hourlyRate"
+            :areas="artist.areas"
+          />
+        </ul>
+        <h3 v-else>
+          No artists found!
+        </h3>
+      </base-card>
+    </section>
+  </div>
 </template>
 
 <script>
