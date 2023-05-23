@@ -3,12 +3,12 @@ export default {
     const newRequest = {
       userEmail: payload.email,
       userMessage: payload.message,
-    }
+    };
 
     const response = await fetch(`https://artsleuth-requests-4684a-default-rtdb.asia-southeast1.firebasedatabase.app/requests/${payload.artistId}.json`, {
       method: 'POST',
-      body: JSON.stringify(newRequest)
-    })
+      body: JSON.stringify(newRequest),
+    });
 
     const responseData = await response.json();
 
@@ -35,17 +35,17 @@ export default {
 
     const requests = [];
 
-    for (const key in responseData) {
+    Object.keys(responseData).forEach((key) => {
       const request = {
         id: key,
-        artistId: artistId,
+        artistId,
         userEmail: responseData[key].userEmail,
-        userMessage: responseData[key].userMessage
-      }
+        userMessage: responseData[key].userMessage,
+      };
 
       requests.push(request);
-    }
+    });
 
     context.commit('setRequests', requests);
-  }
-}
+  },
+};

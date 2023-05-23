@@ -19,8 +19,8 @@ const router = createRouter({
       component: ArtistsDetail,
       props: true,
       children: [
-        { path: 'contact', component: ContactArtist }
-      ]
+        { path: 'contact', component: ContactArtist },
+      ],
     },
     { path: '/register', component: ArtistsRegistration },
     { path: '/requests', component: RequestsReceive },

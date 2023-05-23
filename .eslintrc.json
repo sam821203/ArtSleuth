@@ -8,8 +8,6 @@
         "plugin:vue/recommended",
         "airbnb-base"
     ],
-    "overrides": [
-    ],
     "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module"
@@ -18,10 +16,18 @@
         "vue"
     ],
     "rules": {
-        "linebreak-style": [
-            "off",
-            "windows"
+        "linebreak-style": "off",
+        "vue/no-multiple-template-root": "off",
+        "vue/require-prop-types": "off",
+        "import/extensions": [
+            "error",
+            "always"
         ],
-        "vue/no-multiple-template-root": "off" 
+        "vue/max-attributes-per-line": ["error", {
+            "singleline": {
+                "max": 3
+            }
+        }],
+        "no-param-reassign": [2, { "props": false }]
     }
 }

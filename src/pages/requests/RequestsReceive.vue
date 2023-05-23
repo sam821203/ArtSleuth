@@ -7,22 +7,24 @@
       <header>
         <h2>Requests Received</h2>
       </header>
-      <base-spinner v-if="isLoading"></base-spinner>
+      <base-spinner v-if="isLoading" />
       <ul v-else-if="hasRequests && !isLoading">
         <requests-item
           v-for="req in receivedRequests"
           :key="req.id"
           :email="req.userEmail"
           :message="req.userMessage"
-        ></requests-item>
+        />
       </ul>
-      <h3 v-else>You haven't received any requests yet!</h3>
+      <h3 v-else>
+        You haven't received any requests yet!
+      </h3>
     </base-card>
   </section>
 </template>
 
 <script>
-import RequestsItem from "../../components/requests/requestsItem.vue";
+import RequestsItem from '../../components/requests/requestsItem.vue';
 
 export default {
   components: {
@@ -37,10 +39,10 @@ export default {
   computed: {
     receivedRequests() {
       // namespaced / getters
-      return this.$store.getters["requests/requests"];
+      return this.$store.getters['requests/requests'];
     },
     hasRequests() {
-      return this.$store.getters["requests/hasRequests"];
+      return this.$store.getters['requests/hasRequests'];
     },
   },
   created() {
@@ -51,9 +53,9 @@ export default {
       this.isLoading = true;
 
       try {
-        await this.$store.dispatch("requests/fetchRequests");
+        await this.$store.dispatch('requests/fetchRequests');
       } catch (error) {
-        this.error = error.message || "Something failed!";
+        this.error = error.message || 'Something failed!';
       }
 
       this.isLoading = false;
@@ -71,10 +73,10 @@ header {
 }
 
 ul {
-  list-style: none;
-  margin: 2rem auto;
   padding: 0;
+  margin: 2rem auto;
   max-width: 30rem;
+  list-style: none;
 }
 
 h3 {

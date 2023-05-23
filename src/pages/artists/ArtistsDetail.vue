@@ -11,9 +11,11 @@
     <header>
       <base-card>
         <h2>Interested? Reach out now!</h2>
-        <base-button link :to="contactLink">Contact</base-button>
+        <base-button link :to="contactLink">
+          Contact
+        </base-button>
         <!-- 這裡放 nested 的 contact form -->
-        <router-view></router-view>
+        <router-view />
       </base-card>
     </header>
   </section>
@@ -26,7 +28,7 @@
         :key="area"
         :type="area"
         :title="area"
-      ></base-badge>
+      />
       <p>{{ description }}</p>
     </base-card>
   </section>
@@ -34,7 +36,7 @@
 
 <script>
 export default {
-  props: ["id"],
+  props: ['id'],
   data() {
     return {
       selectedArtist: null,
@@ -42,7 +44,7 @@ export default {
   },
   computed: {
     fullName() {
-      return this.selectedArtist.firstName + " " + this.selectedArtist.lastName;
+      return `${this.selectedArtist.firstName} ${this.selectedArtist.lastName}`;
     },
     areas() {
       return this.selectedArtist.areas;
@@ -54,12 +56,12 @@ export default {
       return this.selectedArtist.description;
     },
     contactLink() {
-      return this.$route.path + "/" + this.id + "/contact";
+      return `${this.$route.path}/${this.id}/contact`;
     },
   },
   created() {
-    this.selectedArtist = this.$store.getters["artists/getArtists"].find(
-      (artist) => artist.id === this.id
+    this.selectedArtist = this.$store.getters['artists/getArtists'].find(
+      (artist) => artist.id === this.id,
     );
   },
 };

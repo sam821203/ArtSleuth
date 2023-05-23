@@ -1,6 +1,6 @@
 export default {
   async registerArtist(context, data) {
-    const userId = context.rootGetters.userId;
+    const { userId } = context.rootGetters;
     const artistData = {
       firstName: data.first,
       lastName: data.last,
@@ -9,22 +9,21 @@ export default {
       areas: data.areas,
     };
 
-    const URL = `https://artsleuth-requests-4684a-default-rtdb.asia-southeast1.firebasedatabase.app/artists/${userId}.json`;
+    // const URL = `https://artsleuth-requests-4684a-default-rtdb.asia-southeast1.firebasedatabase.app/artists/${userId}.json`;
 
-    const response = await fetch(URL, {
-      method: 'PUT',
-      body: JSON.stringify(artistData),
-    });
+    // const response = await fetch(URL, {
+    //   method: 'PUT',
+    //   body: JSON.stringify(artistData),
+    // });
 
     // const responseData = await response.json();
 
-    if (!response.ok) {
-      //error...
-    }
+    // if (!response.ok) {
+    // }
 
     context.commit('registerArtist', {
       ...artistData,
-      id: userId
+      id: userId,
     });
   },
   async loadArtists(context, payload) {
@@ -43,7 +42,7 @@ export default {
 
     const artists = [];
 
-    for (const key in responseData) {
+    Object.keys(responseData).forEach((key) => {
       const artist = {
         id: key,
         firstName: responseData[key].firstName,
@@ -52,11 +51,12 @@ export default {
         hourlyRate: responseData[key].hourlyRate,
         areas: responseData[key].areas,
       };
+
       artists.push(artist);
-    }
+    });
 
     context.commit('setArtists', artists);
     // cache data
     context.commit('setFetchTimestamp');
-  }
-}
+  },
+};

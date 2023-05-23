@@ -2,15 +2,30 @@
   <base-card>
     <h2>Find Your Artist</h2>
     <span class="filter-option">
-      <input type="checkbox" id="frontend" @change="setFilters" checked />
+      <input
+        id="frontend"
+        type="checkbox"
+        checked
+        @change="setFilters"
+      >
       <label for="frontend">Frontend</label>
     </span>
     <span class="filter-option">
-      <input type="checkbox" id="backend" @change="setFilters" checked />
+      <input
+        id="backend"
+        type="checkbox"
+        checked
+        @change="setFilters"
+      >
       <label for="backend">Backend</label>
     </span>
     <span class="filter-option">
-      <input type="checkbox" id="career" @change="setFilters" checked />
+      <input
+        id="career"
+        type="checkbox"
+        checked
+        @change="setFilters"
+      >
       <label for="career">Career</label>
     </span>
   </base-card>
@@ -18,7 +33,7 @@
 
 <script>
 export default {
-  emits: ["change-filters"],
+  emits: ['change-filters'],
   data() {
     return {
       filters: {
@@ -38,7 +53,7 @@ export default {
       };
 
       this.filters = updatedFilters;
-      this.$emit("change-filters", updatedFilters);
+      this.$emit('change-filters', updatedFilters);
     },
   },
 };

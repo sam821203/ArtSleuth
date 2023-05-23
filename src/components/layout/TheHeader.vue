@@ -1,10 +1,22 @@
 <template>
   <header>
     <nav>
-      <h1><router-link to="/">ArtSleuth</router-link></h1>
+      <h1>
+        <router-link to="/">
+          ArtSleuth
+        </router-link>
+      </h1>
       <ul>
-        <li><router-link to="/artists">Our Artists</router-link></li>
-        <li><router-link to="/requests">Messages</router-link></li>
+        <li>
+          <router-link to="/artists">
+            Our Artists
+          </router-link>
+        </li>
+        <li>
+          <router-link to="/requests">
+            Messages
+          </router-link>
+        </li>
       </ul>
     </nav>
   </header>
@@ -12,20 +24,32 @@
 
 <style scoped>
 header {
-  width: 100%;
-  height: 4rem;
-  background-color: #3d008d;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  height: 4rem;
+  background-color: #3d008d;
+}
+
+h1 {
+  margin: 0;
 }
 
 header a {
-  text-decoration: none;
-  color: #f391e3;
   display: inline-block;
   padding: 0.5rem 1rem;
+  text-decoration: none;
   border: 1px solid transparent;
+}
+
+h1 a {
+  margin: 0;
+  color: white;
+}
+
+header ul a {
+  color: #f391e3;
 }
 
 a:active,
@@ -36,15 +60,6 @@ a.router-link-active {
   text-decoration: underline;
 }
 
-h1 {
-  margin: 0;
-}
-
-h1 a {
-  color: white;
-  margin: 0;
-}
-
 h1 a:hover,
 h1 a:active,
 h1 a.router-link-active {
@@ -52,20 +67,20 @@ h1 a.router-link-active {
 }
 
 header nav {
-  width: 90%;
-  margin: auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin: auto;
+  width: 90%;
 }
 
 header ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
 
 li {

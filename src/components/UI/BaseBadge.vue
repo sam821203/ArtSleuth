@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  props: ["type", "title"],
+  props: ['type', 'title'],
   computed: {
     badgeTitle() {
       return this.title.toLowerCase();
@@ -17,26 +17,26 @@ export default {
 
 <style scoped>
 .badge {
-  background-color: #ccc;
-  color: #252525;
-  border-radius: 4px;
-  padding: 0.43rem 0.8rem 0.4rem;
   display: inline-block;
+  padding: 0.43rem 0.8rem 0.4rem;
   margin-right: 0.4rem;
+  color: #252525;
+  background-color: #ccc;
+  border-radius: 4px;
 }
 
 .frontend {
-  background-color: #3d008d;
   color: white;
+  background-color: #3d008d;
 }
 
 .backend {
-  background-color: #71008d;
   color: white;
+  background-color: #71008d;
 }
 
 .career {
-  background-color: #8d006e;
   color: white;
+  background-color: #8d006e;
 }
 </style>

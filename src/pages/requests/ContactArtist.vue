@@ -2,13 +2,15 @@
   <form @submit.prevent="submitForm">
     <div class="form-control">
       <label for="">Your email</label>
-      <input type="email" id="email" v-model.trim="email" />
+      <input id="email" v-model.trim="email" type="email">
     </div>
     <div class="form-control">
       <label for="message">Message</label>
-      <textarea rows="5" id="message" v-model.trim="message"></textarea>
+      <textarea id="message" v-model.trim="message" rows="5" />
     </div>
-    <p class="errors" v-if="!formIsValid">Please enter valid email!</p>
+    <p v-if="!formIsValid" class="errors">
+      Please enter valid email!
+    </p>
     <div class="actions">
       <base-button>Send Message</base-button>
     </div>
@@ -19,8 +21,8 @@
 export default {
   data() {
     return {
-      email: "",
-      message: "",
+      email: '',
+      message: '',
       formIsValid: true,
     };
   },
@@ -29,22 +31,22 @@ export default {
       this.formIsValid = true;
 
       if (
-        this.email === "" ||
-        !this.email.includes("@") ||
-        this.message === ""
+        this.email === ''
+        || !this.email.includes('@')
+        || this.message === ''
       ) {
         this.formIsValid = false;
         return;
       }
 
       // requests/contactArtist 前面是 namespaced，後面是 actions 名稱
-      this.$store.dispatch("requests/contactArtist", {
+      this.$store.dispatch('requests/contactArtist', {
         email: this.email,
         message: this.message,
         artistId: this.$route.params.id,
       });
 
-      this.$router.replace("/artists");
+      this.$router.replace('/artists');
     },
   },
 };
@@ -52,10 +54,10 @@ export default {
 
 <style scoped>
 form {
+  padding: 1rem;
   margin: 1rem;
   border: 1px solid #ccc;
   border-radius: 12px;
-  padding: 1rem;
 }
 
 .form-control {
@@ -63,24 +65,24 @@ form {
 }
 
 label {
-  font-weight: bold;
-  margin-bottom: 0.5rem;
   display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
 }
 
 input,
 textarea {
   display: block;
-  width: 100%;
-  font: inherit;
-  border: 1px solid #ccc;
   padding: 0.15rem;
+  width: 100%;
+  border: 1px solid #ccc;
+  font: inherit;
 }
 
 input:focus,
 textarea:focus {
-  border-color: #3d008d;
   background-color: #faf6ff;
+  border-color: #3d008d;
   outline: none;
 }
 

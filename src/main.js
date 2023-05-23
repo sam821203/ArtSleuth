@@ -18,10 +18,10 @@ app.use(router);
 app.use(store);
 
 // UI components
-app.component('base-card', BaseCard);
-app.component('base-button', BaseButton);
-app.component('base-badge', BaseBadge);
-app.component('base-spinner', BaseSpinner);
-app.component('base-dialog', BaseDialog);
+app.component('BaseCard', BaseCard);
+app.component('BaseButton', BaseButton);
+app.component('BaseBadge', BaseBadge);
+app.component('BaseSpinner', BaseSpinner);
+app.component('BaseDialog', BaseDialog);
 
 app.mount('#app');

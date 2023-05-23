@@ -9,10 +9,10 @@
 
 <script>
 export default {
-  props: ["email", "message"],
+  props: ['email', 'message'],
   computed: {
     emailLink() {
-      return "mailto:" + this.email;
+      return `mailto:${this.email}`;
     },
   },
 };
@@ -20,14 +20,14 @@ export default {
 
 <style scoped>
 li {
+  padding: 1rem;
   margin: 1rem 0;
   border: 1px solid #ccc;
-  padding: 1rem;
 }
 
 a {
-  color: #3d008d;
   text-decoration: none;
+  color: #3d008d;
   font-weight: bold;
 }
 
@@ -37,6 +37,6 @@ a:active {
 }
 
 p {
-  margin: 0.5rem 0 0 0;
+  margin: 0.5rem 0 0;
 }
 </style>

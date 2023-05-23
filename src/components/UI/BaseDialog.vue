@@ -1,18 +1,20 @@
 <template>
   <teleport to="body">
-    <div v-if="show" @click="tryClose" class="backdrop"></div>
-    <dialog open v-if="show">
+    <div v-if="show" class="backdrop" @click="tryClose" />
+    <dialog v-if="show" open>
       <header>
         <slot name="header">
           <h2>{{ title }}</h2>
         </slot>
       </header>
       <section>
-        <slot></slot>
+        <slot />
       </section>
       <menu v-if="!fixed">
         <slot name="actions">
-          <base-button @click="tryClose">Close</base-button>
+          <base-button @click="tryClose">
+            Close
+          </base-button>
         </slot>
       </menu>
     </dialog>
@@ -29,6 +31,7 @@ export default {
     title: {
       type: String,
       required: false,
+      default: 'title',
     },
     fixed: {
       type: Boolean,
@@ -36,13 +39,13 @@ export default {
       default: false,
     },
   },
-  emits: ["close"],
+  emits: ['close'],
   methods: {
     tryClose() {
       if (this.fixed) {
         return;
       }
-      this.$emit("close");
+      this.$emit('close');
     },
   },
 };
@@ -53,32 +56,32 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  height: 100vh;
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.75);
   z-index: 10;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.75);
 }
 
 dialog {
   position: fixed;
   top: 20vh;
   left: 10%;
-  width: 80%;
   z-index: 100;
-  border-radius: 12px;
-  border: none;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   padding: 0;
   margin: 0;
-  overflow: hidden;
+  width: 80%;
   background-color: white;
+  border: none;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
 }
 
 header {
-  background-color: #3a0061;
-  color: white;
-  width: 100%;
   padding: 1rem;
+  width: 100%;
+  color: white;
+  background-color: #3a0061;
 }
 
 header h2 {
@@ -90,13 +93,13 @@ section {
 }
 
 menu {
-  padding: 1rem;
   display: flex;
   justify-content: flex-end;
+  padding: 1rem;
   margin: 0;
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   dialog {
     left: calc(50% - 20rem);
     width: 40rem;

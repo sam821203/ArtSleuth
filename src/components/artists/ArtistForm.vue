@@ -3,97 +3,109 @@
     <div class="form-control" :class="{ invalid: !firstName.isValid }">
       <label for="firstName">First name</label>
       <input
-        type="text"
         id="firstName"
         v-model.trim="firstName.val"
+        type="text"
         @blur="clearValidity('firstName')"
-      />
-      <p v-if="!firstName.isValid">First name must not be empty!</p>
+      >
+      <p v-if="!firstName.isValid">
+        First name must not be empty!
+      </p>
     </div>
     <div class="form-control" :class="{ invalid: !lastName.isValid }">
       <label for="lastName">Last name</label>
       <input
-        type="text"
         id="lastName"
         v-model.trim="lastName.val"
+        type="text"
         @blur="clearValidity('lastName')"
-      />
-      <p v-if="!lastName.isValid">Last name must not be empty!</p>
+      >
+      <p v-if="!lastName.isValid">
+        Last name must not be empty!
+      </p>
     </div>
     <div class="form-control" :class="{ invalid: !description.isValid }">
       <label for="description">Description</label>
       <textarea
-        rows="5"
         id="description"
         v-model.trim="description.val"
+        rows="5"
         @blur="clearValidity('description')"
-      ></textarea>
-      <p v-if="!description.isValid">Description must not be empty!</p>
+      />
+      <p v-if="!description.isValid">
+        Description must not be empty!
+      </p>
     </div>
     <div class="form-control" :class="{ invalid: !rate.isValid }">
       <label for="rate">Hourly Rate</label>
       <input
-        type="number"
         id="rate"
         v-model.number="rate.val"
+        type="number"
         @blur="clearValidity('rate')"
-      />
-      <p v-if="!rate.isValid">Rate must not be empty!</p>
+      >
+      <p v-if="!rate.isValid">
+        Rate must not be empty!
+      </p>
     </div>
     <div class="form-control" :class="{ invalid: !areas.isValid }">
       <h3>Areas of Expertise</h3>
       <div>
         <input
-          type="checkbox"
-          value="frontend"
           id="frontend"
           v-model="areas.val"
+          type="checkbox"
+          value="frontend"
           @blur="clearValidity('areas')"
-        />
+        >
         <label for="frontend">Frontend Development</label>
       </div>
       <div>
         <input
-          type="checkbox"
-          value="backend"
           id="backend"
           v-model="areas.val"
+          type="checkbox"
+          value="backend"
           @blur="clearValidity('areas')"
-        />
+        >
         <label for="backend">Backend Development</label>
       </div>
       <div>
         <input
-          type="checkbox"
-          value="career"
           id="career"
           v-model="areas.val"
+          type="checkbox"
+          value="career"
           @blur="clearValidity('areas')"
-        />
+        >
         <label for="career">Career Advisory</label>
       </div>
-      <p v-if="!areas.isValid">At least one expertise must be selected!</p>
+      <p v-if="!areas.isValid">
+        At least one expertise must be selected!
+      </p>
     </div>
-    <p v-if="!formIsValid">Please fix above errors!</p>
+    <p v-if="!formIsValid">
+      Please fix above errors!
+    </p>
     <base-button>Register</base-button>
   </form>
 </template>
 
 <script>
 export default {
-  emits: ["save-data"],
+  emits: ['save-data'],
   data() {
     return {
       firstName: {
-        val: "",
+        val: '',
         isValid: true,
       },
       lastName: {
-        val: "",
+        val: '',
         isValid: true,
       },
       description: {
-        val: "",
+        val: '',
         isValid: true,
       },
       rate: {
@@ -115,17 +127,17 @@ export default {
       // 一開始先射程 true，以防止再上一個 submit 的狀態
       this.formIsValid = true;
 
-      if (this.firstName.val === "") {
+      if (this.firstName.val === '') {
         this.firstName.isValid = false;
         this.formIsValid = false;
       }
 
-      if (this.lastName.val === "") {
+      if (this.lastName.val === '') {
         this.lastName.isValid = false;
         this.formIsValid = false;
       }
 
-      if (this.description.val === "") {
+      if (this.description.val === '') {
         this.description.isValid = false;
         this.formIsValid = false;
       }
@@ -157,7 +169,7 @@ export default {
         areas: this.areas.val,
       };
 
-      this.$emit("save-data", formData);
+      this.$emit('save-data', formData);
     },
   },
 };
@@ -191,8 +203,8 @@ textarea {
 input:focus,
 textarea:focus {
   background-color: #f0e6fd;
-  outline: none;
   border-color: #3d008d;
+  outline: none;
 }
 
 input[type="checkbox"] {
@@ -210,7 +222,7 @@ h3 {
   font-size: 1rem;
 }
 
-.invalid label {
+.invalid {
   color: red;
 }
 

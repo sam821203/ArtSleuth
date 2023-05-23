@@ -11,14 +11,14 @@ const store = createStore({
   state() {
     return {
       // 確認是誰正在使用此 App
-      userId: 'a3'
+      userId: 'a3',
     };
   },
   getters: {
     userId(state) {
       return state.userId;
-    }
-  }
+    },
+  },
 });
 
 export default store;

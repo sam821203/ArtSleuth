@@ -8,15 +8,15 @@
   <section>
     <base-card>
       <div class="controls">
-        <base-button mode="outline" @click="loadArtists(true)"
-          >Refresh</base-button
-        >
-        <base-button link to="/register" v-if="!isArtist && !isLoading"
-          >Register</base-button
-        >
+        <base-button mode="outline" @click="loadArtists(true)">
+          Refresh
+        </base-button>
+        <base-button v-if="!isArtist && !isLoading" link to="/register">
+          Register
+        </base-button>
       </div>
       <div v-if="isLoading">
-        <base-spinner></base-spinner>
+        <base-spinner />
       </div>
       <ul v-else-if="hasArtists">
         <!-- 外層模板使用內層元件標籤時，以 v-bind 指令來將資料傳遞進來 -->
@@ -30,14 +30,16 @@
           :areas="artist.areas"
         />
       </ul>
-      <h3 v-else>No artists found!</h3>
+      <h3 v-else>
+        No artists found!
+      </h3>
     </base-card>
   </section>
 </template>
 
 <script>
-import ArtistItem from "../../components/artists/ArtistItem.vue";
-import ArtistFilter from "../../components/artists/ArtistFilter.vue";
+import ArtistItem from '../../components/artists/ArtistItem.vue';
+import ArtistFilter from '../../components/artists/ArtistFilter.vue';
 
 export default {
   components: {
@@ -57,19 +59,19 @@ export default {
   },
   computed: {
     isArtist() {
-      return this.$store.getters["artists/isArtist"];
+      return this.$store.getters['artists/isArtist'];
     },
     filteredArtists() {
-      const artists = this.$store.getters["artists/getArtists"];
+      const artists = this.$store.getters['artists/getArtists'];
 
       return artists.filter((artist) => {
-        if (this.activeFilters.frontend && artist.areas.includes("frontend")) {
+        if (this.activeFilters.frontend && artist.areas.includes('frontend')) {
           return true;
         }
-        if (this.activeFilters.backend && artist.areas.includes("backend")) {
+        if (this.activeFilters.backend && artist.areas.includes('backend')) {
           return true;
         }
-        if (this.activeFilters.career && artist.areas.includes("career")) {
+        if (this.activeFilters.career && artist.areas.includes('career')) {
           return true;
         }
 
@@ -77,8 +79,11 @@ export default {
       });
     },
     hasArtists() {
-      return !this.isLoading && this.$store.getters["artists/hasArtists"];
+      return !this.isLoading && this.$store.getters['artists/hasArtists'];
     },
+  },
+  created() {
+    this.loadArtists();
   },
   methods: {
     setFilters(updatedFilters) {
@@ -87,11 +92,11 @@ export default {
     async loadArtists(refresh = false) {
       this.isLoading = true;
       try {
-        await this.$store.dispatch("artists/loadArtists", {
+        await this.$store.dispatch('artists/loadArtists', {
           forceRefresh: refresh,
         });
       } catch (error) {
-        this.error = error.message || "Something went wrong!";
+        this.error = error.message || 'Something went wrong!';
       }
 
       // 當 loading 完成，轉換狀態
@@ -100,9 +105,6 @@ export default {
     handleError() {
       this.error = null;
     },
-  },
-  created() {
-    this.loadArtists();
   },
 };
 </script>
