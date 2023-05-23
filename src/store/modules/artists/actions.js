@@ -27,7 +27,12 @@ export default {
       id: userId
     });
   },
-  async loadArtists(context) {
+  async loadArtists(context, payload) {
+    // 確認是否要更新資料，不需要就直接返回
+    if (!payload.forceRefresh && !context.getters.shouldUpdate) {
+      return;
+    }
+
     const response = await fetch('https://artsleuth-requests-4684a-default-rtdb.asia-southeast1.firebasedatabase.app/artists.json');
     const responseData = await response.json();
 
@@ -51,5 +56,7 @@ export default {
     }
 
     context.commit('setArtists', artists);
+    // cache data
+    context.commit('setFetchTimestamp');
   }
 }

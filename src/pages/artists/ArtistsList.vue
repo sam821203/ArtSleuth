@@ -8,7 +8,9 @@
   <section>
     <base-card>
       <div class="controls">
-        <base-button mode="outline" @click="loadArtists">Refresh</base-button>
+        <base-button mode="outline" @click="loadArtists(true)"
+          >Refresh</base-button
+        >
         <base-button link to="/register" v-if="!isArtist && !isLoading"
           >Register</base-button
         >
@@ -82,10 +84,12 @@ export default {
     setFilters(updatedFilters) {
       this.activeFilters = updatedFilters;
     },
-    async loadArtists() {
+    async loadArtists(refresh = false) {
       this.isLoading = true;
       try {
-        await this.$store.dispatch("artists/loadArtists");
+        await this.$store.dispatch("artists/loadArtists", {
+          forceRefresh: refresh,
+        });
       } catch (error) {
         this.error = error.message || "Something went wrong!";
       }
