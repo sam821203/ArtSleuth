@@ -1,16 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-import ArtistsDetail from './pages/artists/ArtistsDetail.vue';
 import ArtistsList from './pages/artists/ArtistsList.vue';
-import ArtistsRegistration from './pages/artists/ArtistsRegistration.vue';
-
-import ContactArtist from './pages/requests/ContactArtist.vue';
-import RequestsReceive from './pages/requests/RequestsReceive.vue';
-
-import UserAuth from './pages/auth/UserAuth.vue';
-import NotFound from './pages/NotFound.vue';
-
 import store from './store/index.js';
+
+const ArtistsDetail = () => import('./pages/artists/ArtistsDetail.vue');
+const ArtistsRegistration = () => import('./pages/artists/ArtistsRegistration.vue');
+const ContactArtist = () => import('./pages/requests/ContactArtist.vue');
+const RequestsReceive = () => import('./pages/requests/RequestsReceive.vue');
+
+const UserAuth = () => import('./pages/auth/UserAuth.vue');
+const NotFound = () => import('./pages/NotFound.vue');
 
 const router = createRouter({
   history: createWebHistory(),
