@@ -12,7 +12,10 @@
           <base-button mode="outline" @click="loadArtists(true)">
             Refresh
           </base-button>
-          <base-button v-if="!isArtist && !isLoading" link to="/register">
+          <base-button v-if="!isLoggedIn" link to="/auth?redirect=register">
+            Login to Register
+          </base-button>
+          <base-button v-if="isLoggedIn && !isArtist && !isLoading" link to="/register">
             Register
           </base-button>
         </div>
@@ -60,6 +63,9 @@ export default {
     };
   },
   computed: {
+    isLoggedIn() {
+      return this.$store.getters.isAuthenticated;
+    },
     isArtist() {
       return this.$store.getters['artists/isArtist'];
     },

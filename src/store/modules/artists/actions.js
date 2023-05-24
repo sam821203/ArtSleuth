@@ -9,17 +9,18 @@ export default {
       areas: data.areas,
     };
 
-    // const URL = `https://artsleuth-requests-4684a-default-rtdb.asia-southeast1.firebasedatabase.app/artists/${userId}.json`;
+    const { token } = context.rootGetters;
 
-    // const response = await fetch(URL, {
-    //   method: 'PUT',
-    //   body: JSON.stringify(artistData),
-    // });
+    const response = await fetch(`https://artsleuth-requests-4684a-default-rtdb.asia-southeast1.firebasedatabase.app/artists/${userId}.json?auth=${token}`, {
+      method: 'PUT',
+      body: JSON.stringify(artistData),
+    });
 
     // const responseData = await response.json();
 
-    // if (!response.ok) {
-    // }
+    if (!response.ok) {
+      // ..
+    }
 
     context.commit('registerArtist', {
       ...artistData,

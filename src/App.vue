@@ -14,6 +14,21 @@ export default {
   components: {
     TheHeader,
   },
+  computed: {
+    didAutoLogout() {
+      return this.$store.getters.didAutoLogout;
+    },
+  },
+  watch: {
+    didAutoLogout(curValue, oldValue) {
+      if (curValue && curValue !== oldValue) {
+        this.$router.replace('/artists');
+      }
+    },
+  },
+  created() {
+    this.$store.dispatch('keepLogin');
+  },
 };
 </script>
 

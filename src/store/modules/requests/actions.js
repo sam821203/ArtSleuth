@@ -25,7 +25,8 @@ export default {
   },
   async fetchRequests(context) {
     const artistId = context.rootGetters.userId;
-    const response = await fetch(`https://artsleuth-requests-4684a-default-rtdb.asia-southeast1.firebasedatabase.app/requests/${artistId}.json`);
+    const { token } = context.rootGetters;
+    const response = await fetch(`https://artsleuth-requests-4684a-default-rtdb.asia-southeast1.firebasedatabase.app/requests/${artistId}.json?auth=${token}`);
     const responseData = await response.json();
 
     if (!response.ok) {

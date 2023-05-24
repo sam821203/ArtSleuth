@@ -8,7 +8,7 @@ export default {
       // 確認是誰正在使用此 App
       token: null,
       userId: null,
-      tokenExpiration: null,
+      setAutoLogout: false,
     };
   },
   mutations,
