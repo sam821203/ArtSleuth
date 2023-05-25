@@ -79,7 +79,18 @@ body {
   transform: translate(0);
 }
 
+.m-top--lg {
+  margin-top: 8%;
+}
+
 .m-top--xl {
   margin-top: 10%;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border: 0;
+  vertical-align: middle;
 }
 </style>

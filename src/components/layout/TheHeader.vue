@@ -134,6 +134,6 @@ li {
 }
 
 .logo img {
-  margin-top: 4px;
+  margin-bottom: 3px;
 }
 </style>

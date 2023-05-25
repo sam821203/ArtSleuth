@@ -41,14 +41,15 @@ a {
   background-color: var(--primary-deep-gray);
   border-radius: 0.25rem;
   cursor: pointer;
+  transition: all .3s ease;
 }
 
 a:hover,
 a:active,
 button:hover,
 button:active {
-  background-color: #270041;
-  border-color: #270041;
+  background-color: #b0a2e0;
+  border-color: #b0a2e0;
 }
 
 .flat {
@@ -68,5 +69,12 @@ button:active {
 .outline:hover,
 .outline:active {
   background-color: #edd2ff;
+}
+
+.cta-btn {
+  padding: 1rem 1.8rem;
+  font-size: 1.2rem;
+  background-color: #C7B8F8;
+  border-radius: 50px;
 }
 </style>

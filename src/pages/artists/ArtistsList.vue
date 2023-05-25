@@ -3,7 +3,31 @@
     <base-dialog title="An error occurred!" :show="!!error" @close="handleError">
       <p>{{ error }}</p>
     </base-dialog>
-    <section class="m-top--xl">
+    <section class="hero m-top--xl">
+      <div class="text-wrap">
+        <div>
+          <h1>Explore your <br>Best Artist.</h1>
+          <p>Discover the remarkable potential of ArtSleuth. See what you can do on ArtSleuth - the best tool for artist finder.</p>
+        </div>
+        <div>
+          <base-button
+            v-if="!isLoggedIn"
+            link
+            to="/auth?redirect=register"
+            class="cta-btn"
+          >
+            Get started
+          </base-button>
+          <base-button v-if="isLoggedIn && !isArtist && !isLoading" link to="/register">
+            Register
+          </base-button>
+        </div>
+      </div>
+      <div class="img-wrap m-top--xl">
+        <img src="./hero-character.svg" alt="">
+      </div>
+    </section>
+    <section>
       <artist-filter @change-filters="setFilters" />
     </section>
     <section>
@@ -11,12 +35,6 @@
         <div class="controls">
           <base-button mode="outline" @click="loadArtists(true)">
             Refresh
-          </base-button>
-          <base-button v-if="!isLoggedIn" link to="/auth?redirect=register">
-            Login to Register
-          </base-button>
-          <base-button v-if="isLoggedIn && !isArtist && !isLoading" link to="/register">
-            Register
           </base-button>
         </div>
         <div v-if="isLoading">
@@ -133,5 +151,29 @@ ul {
   margin-left: auto;
   margin-right: auto;
   max-width: 1080px;
+}
+
+.img-wrap {
+  width: 54%;
+  transform: translateY(4%);
+}
+
+.text-wrap {
+  width: 42%;
+}
+
+.hero {
+  display: flex;
+  justify-content: space-between;
+}
+
+.hero h1 {
+  margin-bottom: 0;
+  font-size: 64px;
+  font-weight: 700;
+}
+
+.hero p {
+  margin-bottom: 12%;
 }
 </style>

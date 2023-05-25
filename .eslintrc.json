@@ -26,6 +26,7 @@
     "vue/valid-attribute-name": "off",
     "vue/singleline-html-element-content-newline": "off",
     "quotes": "off",
+    "max-len": "off",
     "import/extensions": ["error", "always"],
     "vue/max-attributes-per-line": [
       "error",
