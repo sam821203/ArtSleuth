@@ -8,7 +8,7 @@
   </router-view>
 </template>
 <script>
-import TheHeader from './components/layout/TheHeader.vue';
+import TheHeader from "./components/layout/TheHeader.vue";
 
 export default {
   components: {
@@ -22,25 +22,33 @@ export default {
   watch: {
     didAutoLogout(curValue, oldValue) {
       if (curValue && curValue !== oldValue) {
-        this.$router.replace('/artists');
+        this.$router.replace("/artists");
       }
     },
   },
   created() {
-    this.$store.dispatch('keepLogin');
+    this.$store.dispatch("keepLogin");
   },
 };
 </script>
 
 <style>
-@import "https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap";
+/* @import "https:/fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"; */
+@import "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap";
+
+:root {
+  /* --primary: Aquamarine; */
+  --primary-deep-gray: rgb(31, 31, 31);
+  --primary-light-gray: #eee;
+}
 
 * {
   box-sizing: border-box;
 }
 
 html {
-  font-family: Roboto, sans-serif;
+  /* font-family: Roboto, sans-serif; */
+  font-family: Poppins, sans-serif;
 }
 
 body {
@@ -58,11 +66,11 @@ body {
 }
 
 .route-enter-active {
-  transition: all .3s ease-out;
+  transition: all 0.3s ease-out;
 }
 
 .route-leave-active {
-  transition: all .3s ease-in;
+  transition: all 0.3s ease-in;
 }
 
 .route-enter-to,
@@ -71,4 +79,7 @@ body {
   transform: translate(0);
 }
 
+.m-top--xl {
+  margin-top: 10%;
+}
 </style>

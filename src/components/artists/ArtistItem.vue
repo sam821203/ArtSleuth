@@ -42,8 +42,10 @@ export default {
 li {
   padding: 1rem;
   margin: 1rem 0;
-  border: 1px solid #424242;
+
+  /* border: 1px solid var(--primary-light-gray); */
   border-radius: 12px;
+  box-shadow: rgba(0, 0, 0, 0.08) 0 4px 16px;
 }
 
 h3 {

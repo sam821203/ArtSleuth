@@ -32,8 +32,11 @@
 </template>
 
 <script>
+import BaseCard from "../UI/BaseCard.vue";
+
 export default {
-  emits: ['change-filters'],
+  components: { BaseCard },
+  emits: ["change-filters"],
   data() {
     return {
       filters: {
@@ -53,7 +56,7 @@ export default {
       };
 
       this.filters = updatedFilters;
-      this.$emit('change-filters', updatedFilters);
+      this.$emit("change-filters", updatedFilters);
     },
   },
 };

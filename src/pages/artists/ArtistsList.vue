@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="layout--main">
     <base-dialog title="An error occurred!" :show="!!error" @close="handleError">
       <p>{{ error }}</p>
     </base-dialog>
-    <section>
+    <section class="m-top--xl">
       <artist-filter @change-filters="setFilters" />
     </section>
     <section>
@@ -127,5 +127,11 @@ ul {
 .controls {
   display: flex;
   justify-content: space-between;
+}
+
+.layout--main {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1080px;
 }
 </style>

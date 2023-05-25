@@ -24,6 +24,8 @@
     "vue/require-prop-types": "off",
     "vue/valid-model-definition": "off",
     "vue/valid-attribute-name": "off",
+    "vue/singleline-html-element-content-newline": "off",
+    "quotes": "off",
     "import/extensions": ["error", "always"],
     "vue/max-attributes-per-line": [
       "error",

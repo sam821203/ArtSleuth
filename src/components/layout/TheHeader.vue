@@ -1,31 +1,24 @@
 <template>
   <header>
     <nav>
-      <h1>
-        <router-link to="/">
-          ArtSleuth
-        </router-link>
-      </h1>
+      <router-link to="/">
+        <div class="logo">
+          <img src="./logo.png" alt="">
+        </div>
+        <h1>ArtSleuth</h1>
+      </router-link>
       <ul>
         <li>
-          <router-link to="/artists">
-            Our Artists
-          </router-link>
+          <router-link to="/artists"> Our Artists </router-link>
         </li>
         <li v-if="isLoggedIn">
-          <router-link to="/requests">
-            Messages
-          </router-link>
+          <router-link to="/requests"> Messages </router-link>
         </li>
         <li v-else>
-          <router-link to="/auth">
-            Login
-          </router-link>
+          <router-link to="/auth"> Login </router-link>
         </li>
         <li v-if="isLoggedIn">
-          <base-button @click="logout">
-            Logout
-          </base-button>
+          <base-button @click="logout"> Logout </base-button>
         </li>
       </ul>
     </nav>
@@ -41,8 +34,8 @@ export default {
   },
   methods: {
     logout() {
-      this.$store.dispatch('logout');
-      this.$router.replace('/artists');
+      this.$store.dispatch("logout");
+      this.$router.replace("/artists");
     },
   },
 };
@@ -50,12 +43,18 @@ export default {
 
 <style scoped>
 header {
+  position: fixed;
+  top: 0;
+  z-index: 40;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 4rem;
-  background-color: #3d008d;
+  height: 70px;
+  background-color: #ffffffc3;
+  border-bottom-width: 1px;
+  box-shadow: 0 0 #0000, 0 0 #0000, 0 6px 10px hsla(0deg, 0%, 50%, 0.08);
+  backdrop-filter: blur(16px);
 }
 
 h1 {
@@ -67,23 +66,39 @@ header a {
   padding: 0.5rem 1rem;
   text-decoration: none;
   border: 1px solid transparent;
+  transition: all .3s ease;
 }
 
 h1 a {
   margin: 0;
-  color: white;
+  color: var(--primary-deep-gray);
+  font-weight: 700;
+}
+
+nav > a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--primary-deep-gray);
+}
+
+nav > a img {
+  width: 100%;
+  height: 100%;
 }
 
 header ul a {
-  color: #f391e3;
+  color: var(--primary-deep-gray);
+  font-weight: 500;
 }
 
-a:active,
-a:hover,
-a.router-link-active {
-  /* border: 1px solid #f391e3; */
-  font-style: bold;
-  text-decoration: underline;
+ul a:active,
+ul a:hover,
+ul a.router-link-active {
+  /* border: 1px solid var(--primary-deep-gray); */
+
+  /* text-decoration: underline; */
+  color: #898989;
 }
 
 h1 a:hover,
@@ -111,5 +126,14 @@ header ul {
 
 li {
   margin: 0 0.5rem;
+}
+
+.logo {
+  margin-right: 4px;
+  max-width: 32px;
+}
+
+.logo img {
+  margin-top: 4px;
 }
 </style>

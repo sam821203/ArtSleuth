@@ -7,9 +7,9 @@
 <style>
 .card {
   padding: 1rem;
-  margin: 2rem auto;
-  max-width: 40rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  margin: 0 auto 2rem;
+  width: 100%;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 #0000, 0 0 #0000, 0 0 #0000;
 }
 </style>
