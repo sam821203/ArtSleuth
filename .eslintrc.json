@@ -25,6 +25,14 @@
     "vue/valid-model-definition": "off",
     "vue/valid-attribute-name": "off",
     "vue/singleline-html-element-content-newline": "off",
+    // "vue/singleline-html-element-content-newline": [
+    //   "error",
+    //   {
+    //     "ignoreWhenNoAttributes": true,
+    //     "ignoreWhenEmpty": true,
+    //     "ignores": ["pre", "textarea"]
+    //   }
+    // ],
     "quotes": "off",
     "max-len": "off",
     "comma-dangle": "off",
@@ -32,14 +40,16 @@
     "implicit-arrow-linebreak": "off",
     "operator-linebreak": ["error", "after"],
     "import/extensions": ["error", "always"],
-    "vue/max-attributes-per-line": [
-      "error",
-      {
-        "singleline": {
-          "max": 3
-        }
-      }
-    ],
+    // "vue/max-attributes-per-line": [
+    //   "error",
+    //   {
+    //     "singleline": {
+    //       "max": 3
+    //     }
+    //   }
+    // ],
+    "object-curly-newline": "off",
+    "vue/max-attributes-per-line": "off",
     "no-param-reassign": [2, { "props": false }]
   }
 }

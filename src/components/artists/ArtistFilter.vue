@@ -2,64 +2,85 @@
   <base-card>
     <h2>Find Your Artist</h2>
     <span class="filter-option">
-      <input
-        id="frontend"
-        type="checkbox"
-        checked
-        @change="setFilters"
-      >
-      <label for="frontend">Frontend</label>
+      <label for="frontend"> Frontend </label>
+      <input id="frontend" type="checkbox" checked @change="setFilters" />
     </span>
     <span class="filter-option">
-      <input
-        id="backend"
-        type="checkbox"
-        checked
-        @change="setFilters"
-      >
-      <label for="backend">Backend</label>
+      <label for="backend"> Backend </label>
+      <input id="backend" type="checkbox" checked @change="setFilters" />
     </span>
     <span class="filter-option">
-      <input
-        id="career"
-        type="checkbox"
-        checked
-        @change="setFilters"
-      >
-      <label for="career">Career</label>
+      <label for="career"> Career </label>
+      <input id="career" type="checkbox" checked @change="setFilters" />
     </span>
   </base-card>
 </template>
 
 <script>
+import { reactive } from "vue";
+
 import BaseCard from "../UI/BaseCard.vue";
 
 export default {
   components: { BaseCard },
   emits: ["change-filters"],
-  data() {
-    return {
-      filters: {
-        frontend: true,
-        backend: true,
-        career: true,
-      },
-    };
-  },
-  methods: {
-    setFilters(event) {
+  setup(_, context) {
+    let filters = reactive({
+      frontend: true,
+      backend: true,
+      career: true,
+    });
+
+    const setFilters = (event) => {
       const inputId = event.target.id;
       const isActive = event.target.checked;
       const updatedFilters = {
-        ...this.filters,
+        ...filters,
         [inputId]: isActive,
       };
 
-      this.filters = updatedFilters;
-      this.$emit("change-filters", updatedFilters);
-    },
+      filters = updatedFilters;
+      context.emit("change-filters", updatedFilters);
+    };
+
+    return {
+      filters,
+      setFilters,
+    };
   },
 };
+
+// import { reactive } from "vue";
+// import BaseCard from "../UI/BaseCard.vue";
+
+// export default {
+//   components: {
+//     BaseCard,
+//   },
+//   emits: ["change-filters"],
+//   setup(_, context) {
+//     const filters = reactive({
+//       frontend: true,
+//       backend: true,
+//       career: true,
+//     });
+//     const setFilters = (event) => {
+//       const inputId = event.target.id;
+//       const isActive = event.target.checked;
+//       const updatedFilters = {
+//         ...filters,
+//         [inputId]: isActive,
+//       };
+
+//       context.emit("change-filters", updatedFilters);
+//     };
+
+//     return {
+//       filters,
+//       setFilters,
+//     };
+//   },
+// };
 </script>
 
 <style scoped>

@@ -70,7 +70,8 @@
 </template>
 
 <script>
-import { ref, reactive, computed } from "vue";
+// vue3 =================================================================
+import { ref, reactive, computed, onMounted, toRef } from "vue";
 import { useStore } from "vuex";
 
 import ArtistItem from "../../components/artists/ArtistItem.vue";
@@ -86,27 +87,40 @@ export default {
 
     const isLoading = ref(false);
     const error = ref(null);
-    let activeFilters = reactive({
+
+    // reactive 會針對傳入的資料採用深層監聽的方式
+    const activeFilters = reactive({
       frontend: true,
       backend: true,
       career: true,
     });
+
+    // toRef 可以針對 reactive 中特定屬性轉換成 ref
+    const activeFiltersRef = toRef(activeFilters);
 
     const isLoggedIn = computed(() => store.getters.isAuthenticated);
     const isArtist = computed(() => store.getters["artists/isArtist"]);
     const hasArtists = computed(
       () => !isLoading.value && store.getters["artists/hasArtists"]
     );
+
     const filteredArtists = computed(() => {
       const artists = store.getters["artists/getArtists"];
+
       return artists.filter((artist) => {
-        if (activeFilters.frontend && artist.areas.includes("frontend")) {
+        if (
+          activeFiltersRef.value.frontend &&
+          artist.areas.includes("frontend")
+        ) {
           return true;
         }
-        if (activeFilters.backend && artist.areas.includes("backend")) {
+        if (
+          activeFiltersRef.value.backend &&
+          artist.areas.includes("backend")
+        ) {
           return true;
         }
-        if (activeFilters.career && artist.areas.includes("career")) {
+        if (activeFiltersRef.value.career && artist.areas.includes("career")) {
           return true;
         }
 
@@ -115,8 +129,29 @@ export default {
     });
 
     const setFilters = (updatedFilters) => {
-      activeFilters = updatedFilters;
+      // 使用 Object.assign()將 updatedFilters 的屬性合併到 activeFilters 中，這樣才能保持響應式追蹤
+      Object.assign(activeFilters, updatedFilters);
     };
+
+    const loadArtists = async (refresh = false) => {
+      isLoading.value = true;
+      try {
+        await store.dispatch("artists/loadArtists", {
+          forceRefresh: refresh,
+        });
+      } catch (err) {
+        error.value = err.message || "Something went wrong!";
+      }
+
+      // 當 loading 完成，轉換狀態
+      isLoading.value = false;
+    };
+
+    const handleError = () => {
+      error.value = null;
+    };
+
+    onMounted(loadArtists);
 
     return {
       isLoading,
@@ -127,31 +162,83 @@ export default {
       hasArtists,
       filteredArtists,
       setFilters,
+      loadArtists,
+      handleError,
     };
   },
-  created() {
-    this.loadArtists();
-  },
-
-  methods: {
-    async loadArtists(refresh = false) {
-      this.isLoading = true;
-      try {
-        await this.$store.dispatch("artists/loadArtists", {
-          forceRefresh: refresh,
-        });
-      } catch (error) {
-        this.error = error.message || "Something went wrong!";
-      }
-
-      // 當 loading 完成，轉換狀態
-      this.isLoading = false;
-    },
-    handleError() {
-      this.error = null;
-    },
-  },
 };
+
+// vue2 =================================================================
+// import ArtistItem from "../../components/artists/ArtistItem.vue";
+// import ArtistFilter from "../../components/artists/ArtistFilter.vue";
+
+// export default {
+//   components: {
+//     ArtistItem,
+//     ArtistFilter,
+//   },
+//   data() {
+//     return {
+//       isLoading: false,
+//       error: null,
+//       activeFilters: {
+//         frontend: true,
+//         backend: true,
+//         career: true,
+//       },
+//     };
+//   },
+//   computed: {
+//     isLoggedIn() {
+//       return this.$store.getters.isAuthenticated;
+//     },
+//     isArtist() {
+//       return this.$store.getters["artists/isArtist"];
+//     },
+//     filteredArtists() {
+//       const artists = this.$store.getters["artists/getArtists"];
+//       return artists.filter((artist) => {
+//         if (this.activeFilters.frontend && artist.areas.includes("frontend")) {
+//           return true;
+//         }
+//         if (this.activeFilters.backend && artist.areas.includes("backend")) {
+//           return true;
+//         }
+//         if (this.activeFilters.career && artist.areas.includes("career")) {
+//           return true;
+//         }
+//         return false;
+//       });
+//     },
+//     hasArtists() {
+//       return !this.isLoading && this.$store.getters["artists/hasArtists"];
+//     },
+//   },
+//   created() {
+//     this.loadArtists();
+//   },
+//   methods: {
+//     setFilters(updatedFilters) {
+//       this.activeFilters = updatedFilters;
+//     },
+//     async loadArtists(refresh = false) {
+//       this.isLoading = true;
+//       try {
+//         await this.$store.dispatch("artists/loadArtists", {
+//           forceRefresh: refresh,
+//         });
+//       } catch (error) {
+//         this.error = error.message || "Something went wrong!";
+//       }
+
+//       // 當 loading 完成，轉換狀態
+//       this.isLoading = false;
+//     },
+//     handleError() {
+//       this.error = null;
+//     },
+//   },
+// };
 </script>
 
 <style scoped>
