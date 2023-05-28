@@ -70,7 +70,6 @@
 </template>
 
 <script>
-// vue3 =================================================================
 import { ref, reactive, computed, onMounted, toRef } from "vue";
 import { useStore } from "vuex";
 
@@ -123,7 +122,6 @@ export default {
         if (activeFiltersRef.value.career && artist.areas.includes("career")) {
           return true;
         }
-
         return false;
       });
     });
@@ -135,6 +133,7 @@ export default {
 
     const loadArtists = async (refresh = false) => {
       isLoading.value = true;
+
       try {
         await store.dispatch("artists/loadArtists", {
           forceRefresh: refresh,
