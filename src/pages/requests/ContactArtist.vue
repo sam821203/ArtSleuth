@@ -2,15 +2,13 @@
   <form @submit.prevent="submitForm">
     <div class="form-control">
       <label for="">Your email</label>
-      <input id="email" v-model.trim="email" type="email">
+      <input id="email" v-model.trim="email" type="email" />
     </div>
     <div class="form-control">
       <label for="message">Message</label>
       <textarea id="message" v-model.trim="message" rows="5" />
     </div>
-    <p v-if="!formIsValid" class="errors">
-      Please enter valid email!
-    </p>
+    <p v-if="!formIsValid" class="errors">Please enter valid email!</p>
     <div class="actions">
       <base-button>Send Message</base-button>
     </div>
@@ -18,36 +16,48 @@
 </template>
 
 <script>
+import { ref } from "vue";
+import { useStore } from "vuex";
+import { useRoute, useRouter } from "vue-router";
+
 export default {
-  data() {
-    return {
-      email: '',
-      message: '',
-      formIsValid: true,
-    };
-  },
-  methods: {
-    submitForm() {
-      this.formIsValid = true;
+  setup() {
+    const store = useStore();
+    const route = useRoute();
+    const router = useRouter();
+
+    const email = ref("");
+    const message = ref("");
+    const formIsValid = ref(true);
+
+    const submitForm = () => {
+      formIsValid.value = true;
 
       if (
-        this.email === ''
-        || !this.email.includes('@')
-        || this.message === ''
+        email.value === "" ||
+        !email.value.includes("@") ||
+        message.value === ""
       ) {
-        this.formIsValid = false;
+        formIsValid.value = false;
         return;
       }
 
       // requests/contactArtist 前面是 namespaced，後面是 actions 名稱
-      this.$store.dispatch('requests/contactArtist', {
-        email: this.email,
-        message: this.message,
-        artistId: this.$route.params.id,
+      store.dispatch("requests/contactArtist", {
+        email: email.value,
+        message: message.value,
+        artistId: route.params.id,
       });
 
-      this.$router.replace('/artists');
-    },
+      router.replace("/artists");
+    };
+
+    return {
+      email,
+      message,
+      formIsValid,
+      submitForm,
+    };
   },
 };
 </script>

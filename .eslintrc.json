@@ -27,6 +27,10 @@
     "vue/singleline-html-element-content-newline": "off",
     "quotes": "off",
     "max-len": "off",
+    "comma-dangle": "off",
+    "vue/html-self-closing": "off",
+    "implicit-arrow-linebreak": "off",
+    "operator-linebreak": ["error", "after"],
     "import/extensions": ["error", "always"],
     "vue/max-attributes-per-line": [
       "error",

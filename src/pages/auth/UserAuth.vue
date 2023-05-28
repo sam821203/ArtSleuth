@@ -10,7 +10,7 @@
       <form @submit.prevent="submitForm">
         <div class="form-control">
           <label for="email">E-mail</label>
-          <input id="email" v-model.trim="email" type="email">
+          <input id="email" v-model.trim="email" type="email" />
         </div>
         <div class="form-control">
           <label for="password">Password</label>
@@ -19,10 +19,11 @@
             v-model.trim="password"
             type="password"
             autocomplete="on"
-          >
+          />
         </div>
         <p v-if="!formIsValid">
-          Please enter a valid email and password! (Must be at least 6 characters long.)
+          Please enter a valid email and password! (Must be at least 6
+          characters long.)
         </p>
         <base-button>{{ submitButtonCaption }}</base-button>
         <base-button type="button" mode="flat" @click="switchAuthMode">
@@ -34,77 +35,102 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      email: '',
-      password: '',
-      formIsValid: true,
-      mode: 'login',
-      isLoading: false,
-      error: null,
-    };
-  },
-  computed: {
-    submitButtonCaption() {
-      if (this.mode === 'login') {
-        return 'Login';
-      }
-      return 'Signup';
-    },
-    switchModeCaption() {
-      if (this.mode === 'login') {
-        return 'Signup';
-      }
-      return 'Login';
-    },
-  },
-  methods: {
-    async submitForm() {
-      this.formIsValid = true;
+import { ref, computed } from "vue";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
-      if (this.email === '' || !this.email.includes('@') || this.password.length < 6) {
-        this.formIsValid = false;
+export default {
+  setup() {
+    const store = useStore();
+    const router = useRouter();
+
+    const email = ref("");
+    const password = ref("");
+    const mode = ref("login");
+    const formIsValid = ref(true);
+    const isLoading = ref(false);
+    const error = ref(null);
+
+    const submitButtonCaption = computed(() => {
+      if (mode.value === "login") {
+        return "Login";
+      }
+      return "Signup";
+    });
+
+    const switchModeCaption = computed(() => {
+      if (mode.value === "login") {
+        return "Signup";
+      }
+      return "Login";
+    });
+
+    // 箭頭函數本身不能被聲明為 async 函數，正確的寫法是將箭頭函數改寫為普通的命名函數，然後在函數內部使用 async 鍵字聲明該函數為 async 函數
+    const submitForm = async () => {
+      formIsValid.value = true;
+
+      if (
+        email.value === "" ||
+        !email.value.includes("@") ||
+        password.value.length < 6
+      ) {
+        formIsValid.value = false;
       }
 
       // if passed validation step
-      this.isLoading = true;
+      isLoading.value = true;
 
       // send http request...
       const actionPayload = {
-        email: this.email,
-        password: this.password,
+        email: email.value,
+        password: password.value,
       };
 
       try {
-        if (this.mode === 'login') {
-          await this.$store.dispatch('login', actionPayload);
+        if (mode.value === "login") {
+          await store.dispatch("login", actionPayload);
         } else {
-          await this.$store.dispatch('signup', actionPayload);
+          await store.dispatch("signup", actionPayload);
         }
 
         // 在 query 的需要接在 ArtistsList 接的 redirect
-        const redirectUrl = `/${this.$route.query.redirect || 'artists'}`;
+        const redirectUrl = `/${"artists"}`;
 
         // Login 後，redirect 到不同路徑
-        this.$router.replace(redirectUrl);
+        router.replace(redirectUrl);
       } catch (err) {
-        this.error = err.message || 'Failed to authenticate, try later.';
+        error.value = err.message || "Failed to authenticate, try later.";
       }
 
       // if finished dispatching
-      this.isLoading = false;
-    },
-    switchAuthMode() {
-      if (this.mode === 'login') {
-        this.mode = 'signup';
+      isLoading.value = false;
+    };
+
+    const switchAuthMode = () => {
+      if (mode.value === "login") {
+        mode.value = "signup";
       } else {
-        this.mode = 'login';
+        mode.value = "login";
       }
-    },
-    handleError() {
-      this.error = null;
-    },
+    };
+
+    const handleError = () => {
+      error.value = null;
+    };
+
+    return {
+      email,
+      password,
+      formIsValid,
+      mode,
+      isLoading,
+      error,
+      submitButtonCaption,
+      switchModeCaption,
+      submitForm,
+      switchAuthMode,
+      handleError,
+    };
   },
 };
 </script>
