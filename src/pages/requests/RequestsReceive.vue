@@ -1,6 +1,10 @@
 <template>
   <div>
-    <base-dialog title="An error occurred!" :show="!!error" @close="handleError">
+    <base-dialog
+      title="An error occurred!"
+      :show="!!error"
+      @close="handleError"
+    >
       <p>{{ error }}</p>
     </base-dialog>
     <section>
@@ -17,54 +21,62 @@
             :message="req.userMessage"
           />
         </ul>
-        <h3 v-else>
-          You haven't received any requests yet!
-        </h3>
+        <h3 v-else>You haven't received any requests yet!</h3>
       </base-card>
     </section>
   </div>
 </template>
 
 <script>
-import RequestsItem from '../../components/requests/requestsItem.vue';
+import { ref, computed, onMounted } from "vue";
+import { useStore } from "vuex";
+
+import RequestsItem from "../../components/requests/requestsItem.vue";
 
 export default {
   components: {
     RequestsItem,
   },
-  data() {
-    return {
-      isLoading: false,
-      error: null,
-    };
-  },
-  computed: {
-    receivedRequests() {
-      // namespaced / getters
-      return this.$store.getters['requests/requests'];
-    },
-    hasRequests() {
-      return this.$store.getters['requests/hasRequests'];
-    },
-  },
-  created() {
-    this.loadRequests();
-  },
-  methods: {
-    async loadRequests() {
-      this.isLoading = true;
+  setup() {
+    const store = useStore();
+
+    const isLoading = ref(false);
+    const error = ref(null);
+
+    const receivedRequests = computed(
+      () =>
+        // namespaced / getters
+        store.getters["requests/requests"]
+    );
+
+    const hasRequests = computed(() => store.getters["requests/hasRequests"]);
+
+    const loadRequests = async () => {
+      isLoading.value = true;
 
       try {
-        await this.$store.dispatch('requests/fetchRequests');
-      } catch (error) {
-        this.error = error.message || 'Something failed!';
+        await store.dispatch("requests/fetchRequests");
+      } catch (err) {
+        error.value = err.message || "Something failed!";
       }
 
-      this.isLoading = false;
-    },
-    handleError() {
-      this.error = null;
-    },
+      isLoading.value = false;
+    };
+
+    const handleError = () => {
+      error.value = null;
+    };
+
+    onMounted(loadRequests);
+
+    return {
+      isLoading,
+      error,
+      receivedRequests,
+      hasRequests,
+      loadRequests,
+      handleError,
+    };
   },
 };
 </script>

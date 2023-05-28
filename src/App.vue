@@ -8,32 +8,37 @@
   </router-view>
 </template>
 <script>
+import { computed, watch } from "vue";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
+
 import TheHeader from "./components/layout/TheHeader.vue";
 
 export default {
   components: {
     TheHeader,
   },
-  computed: {
-    didAutoLogout() {
-      return this.$store.getters.didAutoLogout;
-    },
-  },
-  watch: {
-    didAutoLogout(curValue, oldValue) {
-      if (curValue && curValue !== oldValue) {
-        this.$router.replace("/artists");
+  setup() {
+    const store = useStore();
+    const router = useRouter();
+
+    const didAutoLogout = computed(() => store.getters.didAutoLogout);
+
+    const keepLogin = () => {
+      store.dispatch("keepLogin");
+    };
+
+    watch(didAutoLogout, (newVal, oldVal) => {
+      if (newVal && newVal !== oldVal) {
+        router.replace("/artists");
       }
-    },
-  },
-  created() {
-    this.$store.dispatch("keepLogin");
+    });
+    return { didAutoLogout, keepLogin };
   },
 };
 </script>
 
 <style>
-/* @import "https:/fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"; */
 @import "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap";
 
 :root {
@@ -47,7 +52,6 @@ export default {
 }
 
 html {
-  /* font-family: Roboto, sans-serif; */
   font-family: Poppins, sans-serif;
 }
 

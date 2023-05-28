@@ -8,18 +8,27 @@
 </template>
 
 <script>
-import ArtistForm from '../../components/artists/ArtistForm.vue';
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
+
+import ArtistForm from "../../components/artists/ArtistForm.vue";
 
 export default {
   components: {
     ArtistForm,
   },
-  methods: {
-    saveData(data) {
-      this.$store.dispatch('artists/registerArtist', data);
+  setup() {
+    const store = useStore();
+    const router = useRouter();
 
-      this.$router.replace('/artists');
-    },
+    const saveData = (data) => {
+      store.dispatch("artists/registerArtist", data);
+      router.replace("/artists");
+    };
+
+    return {
+      saveData,
+    };
   },
 };
 </script>

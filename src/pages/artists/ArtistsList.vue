@@ -1,13 +1,20 @@
 <template>
   <div class="layout--main">
-    <base-dialog title="An error occurred!" :show="!!error" @close="handleError">
+    <base-dialog
+      title="An error occurred!"
+      :show="!!error"
+      @close="handleError"
+    >
       <p>{{ error }}</p>
     </base-dialog>
     <section class="hero m-top--xl">
       <div class="text-wrap">
         <div>
-          <h1>Explore your <br>Best Artist.</h1>
-          <p>Discover the remarkable potential of ArtSleuth. See what you can do on ArtSleuth - the best tool for artist finder.</p>
+          <h1>Explore your <br />Best Artist.</h1>
+          <p>
+            Discover the remarkable potential of ArtSleuth. See what you can do
+            on ArtSleuth - the best tool for artist finder.
+          </p>
         </div>
         <div>
           <base-button
@@ -18,13 +25,17 @@
           >
             Get started
           </base-button>
-          <base-button v-if="isLoggedIn && !isArtist && !isLoading" link to="/register">
+          <base-button
+            v-if="isLoggedIn && !isArtist && !isLoading"
+            link
+            to="/register"
+          >
             Register
           </base-button>
         </div>
       </div>
       <div class="img-wrap m-top--xl">
-        <img src="./hero-character.svg" alt="">
+        <img src="./hero-character.svg" alt="" />
       </div>
     </section>
     <section>
@@ -52,77 +63,85 @@
             :areas="artist.areas"
           />
         </ul>
-        <h3 v-else>
-          No artists found!
-        </h3>
+        <h3 v-else>No artists found!</h3>
       </base-card>
     </section>
   </div>
 </template>
 
 <script>
-import ArtistItem from '../../components/artists/ArtistItem.vue';
-import ArtistFilter from '../../components/artists/ArtistFilter.vue';
+import { ref, reactive, computed } from "vue";
+import { useStore } from "vuex";
+
+import ArtistItem from "../../components/artists/ArtistItem.vue";
+import ArtistFilter from "../../components/artists/ArtistFilter.vue";
 
 export default {
   components: {
     ArtistItem,
     ArtistFilter,
   },
-  data() {
-    return {
-      isLoading: false,
-      error: null,
-      activeFilters: {
-        frontend: true,
-        backend: true,
-        career: true,
-      },
-    };
-  },
-  computed: {
-    isLoggedIn() {
-      return this.$store.getters.isAuthenticated;
-    },
-    isArtist() {
-      return this.$store.getters['artists/isArtist'];
-    },
-    filteredArtists() {
-      const artists = this.$store.getters['artists/getArtists'];
+  setup() {
+    const store = useStore();
 
+    const isLoading = ref(false);
+    const error = ref(null);
+    let activeFilters = reactive({
+      frontend: true,
+      backend: true,
+      career: true,
+    });
+
+    const isLoggedIn = computed(() => store.getters.isAuthenticated);
+    const isArtist = computed(() => store.getters["artists/isArtist"]);
+    const hasArtists = computed(
+      () => !isLoading.value && store.getters["artists/hasArtists"]
+    );
+    const filteredArtists = computed(() => {
+      const artists = store.getters["artists/getArtists"];
       return artists.filter((artist) => {
-        if (this.activeFilters.frontend && artist.areas.includes('frontend')) {
+        if (activeFilters.frontend && artist.areas.includes("frontend")) {
           return true;
         }
-        if (this.activeFilters.backend && artist.areas.includes('backend')) {
+        if (activeFilters.backend && artist.areas.includes("backend")) {
           return true;
         }
-        if (this.activeFilters.career && artist.areas.includes('career')) {
+        if (activeFilters.career && artist.areas.includes("career")) {
           return true;
         }
 
         return false;
       });
-    },
-    hasArtists() {
-      return !this.isLoading && this.$store.getters['artists/hasArtists'];
-    },
+    });
+
+    const setFilters = (updatedFilters) => {
+      activeFilters = updatedFilters;
+    };
+
+    return {
+      isLoading,
+      error,
+      activeFilters,
+      isLoggedIn,
+      isArtist,
+      hasArtists,
+      filteredArtists,
+      setFilters,
+    };
   },
   created() {
     this.loadArtists();
   },
+
   methods: {
-    setFilters(updatedFilters) {
-      this.activeFilters = updatedFilters;
-    },
     async loadArtists(refresh = false) {
       this.isLoading = true;
       try {
-        await this.$store.dispatch('artists/loadArtists', {
+        await this.$store.dispatch("artists/loadArtists", {
           forceRefresh: refresh,
         });
       } catch (error) {
-        this.error = error.message || 'Something went wrong!';
+        this.error = error.message || "Something went wrong!";
       }
 
       // 當 loading 完成，轉換狀態
