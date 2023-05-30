@@ -4,9 +4,10 @@
       <label for="firstName"> First name </label>
       <input
         id="firstName"
+        ref="firstNameInput"
         v-model.trim="firstName.val"
         type="text"
-        @blur="clearValidity('firstName')"
+        @blur="clearValidity(firstName)"
       />
       <p v-if="!firstName.isValid">First name must not be empty!</p>
     </div>
@@ -16,7 +17,7 @@
         id="lastName"
         v-model.trim="lastName.val"
         type="text"
-        @blur="clearValidity('lastName')"
+        @blur="clearValidity(lastName)"
       />
       <p v-if="!lastName.isValid">Last name must not be empty!</p>
     </div>
@@ -26,7 +27,7 @@
         id="description"
         v-model.trim="description.val"
         rows="5"
-        @blur="clearValidity('description')"
+        @blur="clearValidity(description)"
       />
       <p v-if="!description.isValid">Description must not be empty!</p>
     </div>
@@ -36,7 +37,7 @@
         id="rate"
         v-model.number="rate.val"
         type="number"
-        @blur="clearValidity('rate')"
+        @blur="clearValidity(rate)"
       />
       <p v-if="!rate.isValid">Rate must not be empty!</p>
     </div>
@@ -48,7 +49,7 @@
           v-model="areas.val"
           type="checkbox"
           value="frontend"
-          @blur="clearValidity('areas')"
+          @blur="clearValidity(areas)"
         />
         <label for="frontend"> Frontend Development </label>
       </div>
@@ -58,7 +59,7 @@
           v-model="areas.val"
           type="checkbox"
           value="backend"
-          @blur="clearValidity('areas')"
+          @blur="clearValidity(areas)"
         />
         <label for="backend"> Backend Development </label>
       </div>
@@ -68,7 +69,7 @@
           v-model="areas.val"
           type="checkbox"
           value="career"
-          @blur="clearValidity('areas')"
+          @blur="clearValidity(areas)"
         />
         <label for="career"> Career Advisory </label>
       </div>
@@ -80,86 +81,145 @@
 </template>
 
 <script>
+import { ref, reactive } from "vue";
+
 export default {
   emits: ["save-data"],
-  data() {
-    return {
-      firstName: {
-        val: "",
-        isValid: true,
-      },
-      lastName: {
-        val: "",
-        isValid: true,
-      },
-      description: {
-        val: "",
-        isValid: true,
-      },
-      rate: {
-        val: null,
-        isValid: true,
-      },
-      areas: {
-        val: [],
-        isValid: true,
-      },
-      formIsValid: true,
+  setup(_, context) {
+    const firstName = reactive({
+      val: "",
+      isValid: true,
+    });
+    const lastName = reactive({
+      val: "",
+      isValid: true,
+    });
+    const description = reactive({
+      val: "",
+      isValid: true,
+    });
+    const rate = reactive({
+      val: null,
+      isValid: true,
+    });
+    const areas = reactive({
+      val: [],
+      isValid: true,
+    });
+
+    const formIsValid = ref(true);
+
+    // 引用來儲存 <input> 元素的參考
+    // const firstNameInput = ref(null);
+
+    // inputField 填放上面參數的 proxy 物件
+    const clearValidity = (inputField) => {
+      inputField.isValid = true;
     };
-  },
-  methods: {
-    clearValidity(input) {
-      this[input].isValid = true;
-    },
-    validateForm() {
-      // 一開始先射程 true，以防止再上一個 submit 的狀態
-      this.formIsValid = true;
 
-      if (this.firstName.val === "") {
-        this.firstName.isValid = false;
-        this.formIsValid = false;
+    const validateForm = () => {
+      // 一開始先設成 true，以防止再上一個 submit 的狀態
+      formIsValid.value = true;
+
+      if (firstName.val === "") {
+        firstName.isValid = false;
+        formIsValid.value = false;
       }
 
-      if (this.lastName.val === "") {
-        this.lastName.isValid = false;
-        this.formIsValid = false;
+      if (lastName.val === "") {
+        lastName.isValid = false;
+        formIsValid.value = false;
       }
 
-      if (this.description.val === "") {
-        this.description.isValid = false;
-        this.formIsValid = false;
+      if (description.val === "") {
+        description.isValid = false;
+        formIsValid.value = false;
       }
 
-      if (!this.rate.val || this.rate.val < 0) {
-        this.rate.isValid = false;
-        this.formIsValid = false;
+      if (!rate.val || rate.val < 0) {
+        rate.isValid = false;
+        formIsValid.value = false;
       }
 
-      if (this.areas.val.length === 0) {
-        this.areas.isValid = false;
-        this.formIsValid = false;
+      if (areas.val.length === 0) {
+        areas.isValid = false;
+        formIsValid.value = false;
       }
-    },
-    submitForm() {
-      // 呼叫 validateForm 方法
-      this.validateForm();
+    };
+
+    const submitForm = () => {
+      validateForm();
 
       // 如果 form 沒有被 validate，就 return 回去，以停止之後的動作
-      if (!this.formIsValid) {
+      if (!formIsValid.value) {
         return;
       }
 
       const formData = {
-        first: this.firstName.val,
-        last: this.lastName.val,
-        desc: this.description.val,
-        rate: this.rate.val,
-        areas: this.areas.val,
+        first: firstName.val,
+        last: lastName.val,
+        desc: description.val,
+        rate: rate.val,
+        areas: areas.val,
       };
 
-      this.$emit("save-data", formData);
-    },
+      context.emit("save-data", formData);
+    };
+
+    return {
+      firstName,
+      lastName,
+      description,
+      rate,
+      areas,
+      formIsValid,
+      clearValidity,
+      validateForm,
+      submitForm,
+    };
   },
+  // methods: {
+  //   // validateForm() {
+  //   //   // 一開始先設成 true，以防止再上一個 submit 的狀態
+  //   //   this.formIsValid = true;
+  //   //   if (this.firstName.val === "") {
+  //   //     this.firstName.isValid = false;
+  //   //     this.formIsValid = false;
+  //   //   }
+  //   //   if (this.lastName.val === "") {
+  //   //     this.lastName.isValid = false;
+  //   //     this.formIsValid = false;
+  //   //   }
+  //   //   if (this.description.val === "") {
+  //   //     this.description.isValid = false;
+  //   //     this.formIsValid = false;
+  //   //   }
+  //   //   if (!this.rate.val || this.rate.val < 0) {
+  //   //     this.rate.isValid = false;
+  //   //     this.formIsValid = false;
+  //   //   }
+  //   //   if (this.areas.val.length === 0) {
+  //   //     this.areas.isValid = false;
+  //   //     this.formIsValid = false;
+  //   //   }
+  //   // },
+  //   // submitForm() {
+  //   //   // 呼叫 validateForm 方法
+  //   //   this.validateForm();
+  //   //   // 如果 form 沒有被 validate，就 return 回去，以停止之後的動作
+  //   //   if (!this.formIsValid) {
+  //   //     return;
+  //   //   }
+  //   //   const formData = {
+  //   //     first: this.firstName.val,
+  //   //     last: this.lastName.val,
+  //   //     desc: this.description.val,
+  //   //     rate: this.rate.val,
+  //   //     areas: this.areas.val,
+  //   //   };
+  //   //   this.$emit("save-data", formData);
+  //   // },
+  // },
 };
 </script>
 

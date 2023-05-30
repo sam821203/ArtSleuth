@@ -14,26 +14,31 @@
       <base-button link mode="outline" :to="artistContactLink">
         Contact
       </base-button>
-      <base-button link :to="artistDetailsLink">
-        View Details
-      </base-button>
+      <base-button link :to="artistDetailsLink"> View Details </base-button>
     </div>
   </li>
 </template>
 
 <script>
+import { computed } from "vue";
+import { useRoute } from "vue-router";
+
 export default {
-  props: ['id', 'firstName', 'lastName', 'rate', 'areas'],
-  computed: {
-    fullName() {
-      return `${this.firstName} ${this.lastName}`;
-    },
-    artistContactLink() {
-      return `${this.$route.path}/${this.id}/contact`;
-    },
-    artistDetailsLink() {
-      return `${this.$route.path}/${this.id}`;
-    },
+  props: ["id", "firstName", "lastName", "rate", "areas"],
+  setup(props) {
+    const route = useRoute();
+
+    const fullName = computed(() => `${props.firstName} ${props.lastName}`);
+    const artistContactLink = computed(
+      () => `${route.path}/${props.id}/contact`
+    );
+    const artistDetailsLink = computed(() => `${route.path}/${props.id}`);
+
+    return {
+      fullName,
+      artistContactLink,
+      artistDetailsLink,
+    };
   },
 };
 </script>

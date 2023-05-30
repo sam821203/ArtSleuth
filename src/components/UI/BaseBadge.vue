@@ -5,12 +5,16 @@
 </template>
 
 <script>
+import { computed } from "vue";
+
 export default {
-  props: ['type', 'title'],
-  computed: {
-    badgeTitle() {
-      return this.title.toLowerCase();
-    },
+  props: ["type", "title"],
+  setup(props) {
+    const badgeTitle = computed(() => props.title.toLowerCase());
+
+    return {
+      badgeTitle,
+    };
   },
 };
 </script>

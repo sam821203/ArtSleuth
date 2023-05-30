@@ -1,12 +1,28 @@
 <template>
   <header>
-    <nav>
-      <router-link to="/">
-        <div class="logo">
-          <img src="./logo.png" alt="">
-        </div>
-        <h1>ArtSleuth</h1>
-      </router-link>
+    <nav class="header__wrap">
+      <div class="header__wrap--left">
+        <router-link to="/">
+          <div class="logo">
+            <img src="./logo.png" alt="" />
+          </div>
+          <h1>ArtSleuth</h1>
+        </router-link>
+        <ul>
+          <router-link to="/artists">
+            <li>Home</li>
+          </router-link>
+          <a href="javascript:void(0)">
+            <li>About Us</li>
+          </a>
+          <a href="javascript:void(0)">
+            <li>Services</li>
+          </a>
+          <a href="javascript:void(0)">
+            <li>Contact</li>
+          </a>
+        </ul>
+      </div>
       <ul>
         <li>
           <router-link to="/artists"> Our Artists </router-link>
@@ -26,17 +42,25 @@
 </template>
 
 <script>
+import { computed } from "vue";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
+
 export default {
-  computed: {
-    isLoggedIn() {
-      return this.$store.getters.isAuthenticated;
-    },
-  },
-  methods: {
-    logout() {
-      this.$store.dispatch("logout");
-      this.$router.replace("/artists");
-    },
+  setup() {
+    const store = useStore();
+    const router = useRouter();
+
+    const isLoggedIn = computed(() => store.getters.isAuthenticated);
+
+    const logout = () => {
+      store.dispatch("logout");
+      router.replace("/artists");
+    };
+    return {
+      isLoggedIn,
+      logout,
+    };
   },
 };
 </script>
@@ -63,10 +87,10 @@ h1 {
 
 header a {
   display: inline-block;
-  padding: 0.5rem 1rem;
+  padding: 0.6rem;
   text-decoration: none;
   border: 1px solid transparent;
-  transition: all .3s ease;
+  transition: all 0.3s ease;
 }
 
 h1 a {
@@ -92,6 +116,16 @@ header ul a {
   font-weight: 500;
 }
 
+.header__wrap--left {
+  display: flex;
+  align-items: center;
+}
+
+.header__wrap--left a {
+  display: flex;
+  color: var(--primary-deep-gray);
+}
+
 ul a:active,
 ul a:hover,
 ul a.router-link-active {
@@ -111,8 +145,9 @@ header nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: auto;
-  width: 90%;
+  margin: 0 36px;
+  width: 100%;
+  max-width: 1840px;
 }
 
 header ul {

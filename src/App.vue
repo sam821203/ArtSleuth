@@ -59,6 +59,10 @@ body {
   margin: 0;
 }
 
+.d-flex {
+  display: flex;
+}
+
 .route-enter-from {
   opacity: 0;
   transform: translateY(-30px);

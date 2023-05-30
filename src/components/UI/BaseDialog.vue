@@ -13,9 +13,7 @@
         </section>
         <menu v-if="!fixed">
           <slot name="actions">
-            <base-button @click="tryClose">
-              Close
-            </base-button>
+            <base-button @click="tryClose"> Close </base-button>
           </slot>
         </menu>
       </dialog>
@@ -33,7 +31,7 @@ export default {
     title: {
       type: String,
       required: false,
-      default: 'title',
+      default: "title",
     },
     fixed: {
       type: Boolean,
@@ -41,14 +39,18 @@ export default {
       default: false,
     },
   },
-  emits: ['close'],
-  methods: {
-    tryClose() {
-      if (this.fixed) {
+  emits: ["close"],
+  setup(props, context) {
+    const tryClose = () => {
+      if (props.fixed) {
         return;
       }
-      this.$emit('close');
-    },
+      context.emit("close");
+    };
+
+    return {
+      tryClose,
+    };
   },
 };
 </script>
