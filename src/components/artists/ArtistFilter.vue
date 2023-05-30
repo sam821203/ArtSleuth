@@ -2,16 +2,16 @@
   <base-card>
     <h2>Find Your Artist</h2>
     <span class="filter-option">
-      <label for="frontend"> Frontend </label>
-      <input id="frontend" type="checkbox" checked @change="setFilters" />
+      <label for="painting"> Painting </label>
+      <input id="painting" type="checkbox" checked @change="setFilters" />
     </span>
     <span class="filter-option">
-      <label for="backend"> Backend </label>
-      <input id="backend" type="checkbox" checked @change="setFilters" />
+      <label for="sculpture"> Sculpture </label>
+      <input id="sculpture" type="checkbox" checked @change="setFilters" />
     </span>
     <span class="filter-option">
-      <label for="career"> Career </label>
-      <input id="career" type="checkbox" checked @change="setFilters" />
+      <label for="prints"> Prints </label>
+      <input id="prints" type="checkbox" checked @change="setFilters" />
     </span>
   </base-card>
 </template>
@@ -26,9 +26,9 @@ export default {
   emits: ["change-filters"],
   setup(_, context) {
     let filters = reactive({
-      frontend: true,
-      backend: true,
-      career: true,
+      painting: true,
+      sculpture: true,
+      prints: true,
     });
 
     const setFilters = (event) => {

@@ -4,6 +4,7 @@ export default {
     const artistData = {
       firstName: data.first,
       lastName: data.last,
+      country: data.country,
       description: data.desc,
       hourlyRate: data.rate,
       areas: data.areas,
@@ -48,6 +49,7 @@ export default {
         id: key,
         firstName: responseData[key].firstName,
         lastName: responseData[key].lastName,
+        country: responseData[key].country,
         description: responseData[key].description,
         hourlyRate: responseData[key].hourlyRate,
         areas: responseData[key].areas,

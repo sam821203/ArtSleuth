@@ -59,6 +59,7 @@
             :key="artist.id"
             :first-name="artist.firstName"
             :last-name="artist.lastName"
+            :country="artist.country"
             :rate="artist.hourlyRate"
             :areas="artist.areas"
           />
@@ -89,9 +90,9 @@ export default {
 
     // reactive 會針對傳入的資料採用深層監聽的方式
     const activeFilters = reactive({
-      frontend: true,
-      backend: true,
-      career: true,
+      painting: true,
+      sculpture: true,
+      prints: true,
     });
 
     // toRef 可以針對 reactive 中特定屬性轉換成 ref
@@ -108,18 +109,18 @@ export default {
 
       return artists.filter((artist) => {
         if (
-          activeFiltersRef.value.frontend &&
-          artist.areas.includes("frontend")
+          activeFiltersRef.value.painting &&
+          artist.areas.includes("painting")
         ) {
           return true;
         }
         if (
-          activeFiltersRef.value.backend &&
-          artist.areas.includes("backend")
+          activeFiltersRef.value.sculpture &&
+          artist.areas.includes("sculpture")
         ) {
           return true;
         }
-        if (activeFiltersRef.value.career && artist.areas.includes("career")) {
+        if (activeFiltersRef.value.prints && artist.areas.includes("prints")) {
           return true;
         }
         return false;

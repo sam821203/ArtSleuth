@@ -1,5 +1,6 @@
 <template>
   <li>
+    <h6>{{ country }}</h6>
     <h3>{{ fullName }}</h3>
     <h4>${{ rate }}/hour</h4>
     <div>
@@ -24,7 +25,7 @@ import { computed } from "vue";
 import { useRoute } from "vue-router";
 
 export default {
-  props: ["id", "firstName", "lastName", "rate", "areas"],
+  props: ["id", "firstName", "lastName", "country", "rate", "areas"],
   setup(props) {
     const route = useRoute();
 

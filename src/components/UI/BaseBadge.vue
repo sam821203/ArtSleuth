@@ -43,4 +43,11 @@ export default {
   color: white;
   background-color: #8d006e;
 }
+
+.painting,
+.sculpture,
+.prints {
+  color: #927bdb;
+  background-color: rgba(199, 184, 248, 0.5);
+}
 </style>

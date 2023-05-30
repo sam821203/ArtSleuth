@@ -21,6 +21,22 @@
       />
       <p v-if="!lastName.isValid">Last name must not be empty!</p>
     </div>
+    <div class="form-control" :class="{ invalid: !country.isValid }">
+      <label for="country">Select country</label>
+      <select
+        id="country"
+        v-model.trim="country.val"
+        @blur="clearValidity(country)"
+      >
+        <option
+          v-for="(countryName, index) in countries"
+          :key="countryName"
+          :selected="index === 0"
+        >
+          {{ countryName }}
+        </option>
+      </select>
+    </div>
     <div class="form-control" :class="{ invalid: !description.isValid }">
       <label for="description"> Description </label>
       <textarea
@@ -45,33 +61,33 @@
       <h3>Areas of Expertise</h3>
       <div>
         <input
-          id="frontend"
+          id="painting"
           v-model="areas.val"
           type="checkbox"
-          value="frontend"
+          value="painting"
           @blur="clearValidity(areas)"
         />
-        <label for="frontend"> Frontend Development </label>
+        <label for="painting"> Painting </label>
       </div>
       <div>
         <input
-          id="backend"
+          id="sculpture"
           v-model="areas.val"
           type="checkbox"
-          value="backend"
+          value="sculpture"
           @blur="clearValidity(areas)"
         />
-        <label for="backend"> Backend Development </label>
+        <label for="sculpture"> Sculpture </label>
       </div>
       <div>
         <input
-          id="career"
+          id="prints"
           v-model="areas.val"
           type="checkbox"
-          value="career"
+          value="prints"
           @blur="clearValidity(areas)"
         />
-        <label for="career"> Career Advisory </label>
+        <label for="prints"> Prints </label>
       </div>
       <p v-if="!areas.isValid">At least one expertise must be selected!</p>
     </div>
@@ -81,7 +97,7 @@
 </template>
 
 <script>
-import { ref, reactive } from "vue";
+import { ref, reactive, onMounted } from "vue";
 
 export default {
   emits: ["save-data"],
@@ -91,6 +107,10 @@ export default {
       isValid: true,
     });
     const lastName = reactive({
+      val: "",
+      isValid: true,
+    });
+    const country = reactive({
       val: "",
       isValid: true,
     });
@@ -107,6 +127,7 @@ export default {
       isValid: true,
     });
 
+    const countries = ref([]);
     const formIsValid = ref(true);
 
     // 引用來儲存 <input> 元素的參考
@@ -128,6 +149,11 @@ export default {
 
       if (lastName.val === "") {
         lastName.isValid = false;
+        formIsValid.value = false;
+      }
+
+      if (country.val === "") {
+        country.isValid = false;
         formIsValid.value = false;
       }
 
@@ -158,6 +184,7 @@ export default {
       const formData = {
         first: firstName.val,
         last: lastName.val,
+        country: country.val,
         desc: description.val,
         rate: rate.val,
         areas: areas.val,
@@ -166,9 +193,27 @@ export default {
       context.emit("save-data", formData);
     };
 
+    const renderCountries = async () => {
+      const res = await fetch("https://restcountries.com/v3.1/all");
+
+      const data = await res.json();
+
+      data.forEach((el) => {
+        const countryName = el.name.common;
+
+        countries.value.push(countryName);
+        countries.value.sort();
+      });
+    };
+
+    onMounted(() => {
+      renderCountries();
+    });
+
     return {
       firstName,
       lastName,
+      country,
       description,
       rate,
       areas,
@@ -176,6 +221,8 @@ export default {
       clearValidity,
       validateForm,
       submitForm,
+      renderCountries,
+      countries,
     };
   },
   // methods: {
