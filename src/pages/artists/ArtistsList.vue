@@ -254,12 +254,6 @@ ul {
   justify-content: space-between;
 }
 
-.layout--main {
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 1080px;
-}
-
 .img-wrap {
   width: 54%;
   transform: translateY(4%);

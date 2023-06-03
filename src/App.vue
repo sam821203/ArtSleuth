@@ -63,15 +63,12 @@ export default {
   margin: 0;
 }
 
-html,
-body {
+html {
   height: 100%;
-  font-family: Poppins, sans-serif;
 }
 
 body {
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
+  font-family: Poppins, sans-serif;
 }
 
 img,
@@ -149,5 +146,24 @@ img {
   height: auto;
   border: 0;
   vertical-align: middle;
+}
+
+::placeholder {
+  padding-left: 8px;
+
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #ccc;
+  opacity: 1; /* Firefox */
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  transition: background-color 600000s 0s, color 600000s 0s;
+}
+
+.layout--main {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1080px;
 }
 </style>

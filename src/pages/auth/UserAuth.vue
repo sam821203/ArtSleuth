@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="user-auth">
     <base-dialog :show="!!error" title="An error occurred" @close="handleError">
       <p>{{ error }}</p>
     </base-dialog>
@@ -10,7 +10,12 @@
       <form @submit.prevent="submitForm">
         <div class="form-control">
           <label for="email">E-mail</label>
-          <input id="email" v-model.trim="email" type="email" />
+          <input
+            id="email"
+            v-model.trim="email"
+            type="email"
+            placeholder="name@example.com"
+          />
         </div>
         <div class="form-control">
           <label for="password">Password</label>
@@ -19,16 +24,23 @@
             v-model.trim="password"
             type="password"
             autocomplete="on"
+            placeholder="12345678"
           />
         </div>
         <p v-if="!formIsValid">
           Please enter a valid email and password! (Must be at least 6
           characters long.)
         </p>
-        <base-button>{{ submitButtonCaption }}</base-button>
-        <base-button type="button" mode="flat" @click="switchAuthMode">
-          {{ switchModeCaption }}
-        </base-button>
+        <div class="buttons">
+          <base-button>{{ submitButtonCaption }}</base-button>
+          <base-button
+            type="button"
+            mode="outline underline"
+            @click="switchAuthMode"
+          >
+            {{ switchModeCaption }}
+          </base-button>
+        </div>
       </form>
     </base-card>
   </div>
@@ -142,7 +154,7 @@ form {
 }
 
 .form-control {
-  margin: 0.5rem 0;
+  margin-bottom: 1rem;
 }
 
 label {
@@ -154,16 +166,39 @@ label {
 input,
 textarea {
   display: block;
-  padding: 0.15rem;
+  padding: 0.35rem;
   width: 100%;
   border: 1px solid #ccc;
   font: inherit;
+  border-radius: 4px;
 }
 
 input:focus,
 textarea:focus {
-  background-color: #faf6ff;
-  border-color: #3d008d;
+  background-color: #ededed;
+  border-color: #a9a9a9;
   outline: none;
+}
+
+.user-auth {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  max-width: 540px;
+  transform: translate(-50%, -50%);
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2.5rem;
+}
+
+.buttons button {
+  margin-bottom: 1rem;
+  margin-right: 0;
+  font-size: 1rem;
+  border: 0;
 }
 </style>

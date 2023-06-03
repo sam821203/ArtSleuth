@@ -68,6 +68,10 @@ a:last-child {
   border: 1px #000 solid;
 }
 
+.underline {
+  text-decoration: underline;
+}
+
 .flat:hover,
 .flat:active,
 .outline:hover,

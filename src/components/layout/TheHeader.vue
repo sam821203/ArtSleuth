@@ -24,14 +24,16 @@
         </ul>
       </div>
       <ul>
-        <li>
-          <router-link to="/artists"> Our Artists </router-link>
-        </li>
         <li v-if="isLoggedIn">
           <router-link to="/requests"> Messages </router-link>
         </li>
         <li v-else>
-          <router-link to="/auth"> Login </router-link>
+          <router-link to="/auth" class="header__auth signup">
+            <span>Sign Up</span>
+          </router-link>
+          <router-link to="/auth" class="header__auth login">
+            <span>Login</span>
+          </router-link>
         </li>
         <li v-if="isLoggedIn">
           <base-button @click="logout"> Logout </base-button>
@@ -126,18 +128,14 @@ header ul a {
   color: var(--primary-deep-gray);
 }
 
-ul a:active,
-ul a:hover,
-ul a.router-link-active {
+ul a:hover {
   /* border: 1px solid var(--primary-deep-gray); */
 
   /* text-decoration: underline; */
   color: #898989;
 }
 
-h1 a:hover,
-h1 a:active,
-h1 a.router-link-active {
+h1 a:hover {
   border-color: transparent;
 }
 
@@ -145,7 +143,7 @@ header nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0 36px;
+  margin: 0 36px 1px;
   width: 100%;
   max-width: 1840px;
 }
@@ -170,5 +168,23 @@ li {
 
 .logo img {
   margin-bottom: 3px;
+}
+
+.header__auth {
+  width: 126px;
+  height: 40px;
+  text-align: center;
+  line-height: 120%;
+  border-radius: 4px;
+}
+
+.signup {
+  margin-right: 8px;
+  border: 1px #000 solid;
+}
+
+.login {
+  color: #fff;
+  background-color: #000;
 }
 </style>

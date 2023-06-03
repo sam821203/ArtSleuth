@@ -26,7 +26,11 @@ const router = createRouter({
     },
     { path: '/register', component: ArtistsRegistration, meta: { requiresAuth: true } },
     { path: '/requests', component: RequestsReceive, meta: { requiresAuth: true } },
-    { path: '/auth', component: UserAuth, meta: { requiresUnAuth: true } },
+    {
+      path: '/auth',
+      component: UserAuth,
+      meta: { requiresUnAuth: true },
+    },
     { path: '/:notFound(.*)', component: NotFound },
   ],
 });

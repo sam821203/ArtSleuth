@@ -2,8 +2,8 @@
   <li>
     <div class="inner__left">
       <div class="cover-photo">
-        <!-- <img :src="coverPhoto" alt="" /> -->
-        <img src="./default-cover-photo.png" alt="" />
+        <img :src="coverPhoto" alt="" />
+        <!-- <img src="./default-cover-photo.png" alt="" /> -->
       </div>
     </div>
     <div class="inner__center">
@@ -44,7 +44,7 @@ import { useRoute } from "vue-router";
 export default {
   props: [
     "id",
-    // "coverPhoto",
+    "coverPhoto",
     "firstName",
     "lastName",
     "country",
@@ -111,6 +111,7 @@ h6 {
   padding: 0.625rem 0;
   width: 94px;
   height: 36px;
+  line-height: 140%;
 }
 
 .cover-photo {

@@ -1,20 +1,19 @@
 <template>
   <form @submit.prevent="submitForm">
-    <!-- <div class="form-control" :class="{ invalid: !firstName.isValid }">
+    <div class="form-control" :class="{ invalid: !coverPhoto.isValid }">
       <div class="cover-photo">
         <img src="./default-cover-photo.png" alt="" />
         <label for="coverPhoto">Upload photo</label>
         <input
           id="coverPhoto"
-          ref="inputFile"
+          ref="coverPhoto"
           type="file"
           accept="image/jpeg, image/png, image/jpg"
-          @input="coverPhoto.val"
-          @click="uploadCoverPhoto"
-          @blur="clearValidity(firstName)"
+          @change="uploadCoverPhoto"
+          @blur="clearValidity(coverPhoto)"
         />
       </div>
-    </div> -->
+    </div>
     <div class="form-control" :class="{ invalid: !firstName.isValid }">
       <label for="firstName"> First name </label>
       <input
@@ -122,12 +121,12 @@ import { ref, reactive, onMounted } from "vue";
 export default {
   emits: ["save-data"],
   setup(_, context) {
-    // const inputFile = ref("default-cover-photo.png");
+    // const coverPhoto = ref(null);
 
-    // const coverPhoto = reactive({
-    //   val: "",
-    //   isValid: true,
-    // });
+    const coverPhoto = reactive({
+      val: "",
+      isValid: true,
+    });
     const firstName = reactive({
       val: "",
       isValid: true,
@@ -165,10 +164,10 @@ export default {
       // 一開始先設成 true，以防止再上一個 submit 的狀態
       formIsValid.value = true;
 
-      // if (coverPhoto.val === "") {
-      //   coverPhoto.isValid = false;
-      //   formIsValid.value = false;
-      // }
+      if (coverPhoto.val === "") {
+        coverPhoto.isValid = false;
+        formIsValid.value = false;
+      }
 
       if (firstName.val === "") {
         firstName.isValid = false;
@@ -210,7 +209,7 @@ export default {
       }
 
       const formData = {
-        // photo: coverPhoto.val.toString(),
+        photo: coverPhoto.val,
         first: firstName.val,
         last: lastName.val,
         country: country.val,
@@ -233,6 +232,24 @@ export default {
         countries.value.push(countryName);
         countries.value.sort();
       });
+    };
+
+    const uploadCoverPhoto = (event) => {
+      const photo = document.querySelector(".cover-photo img");
+      const imageFile = event.target.files[0];
+
+      if (imageFile) {
+        const reader = new FileReader();
+
+        // Convert the image file to a string
+        reader.readAsDataURL(imageFile);
+
+        // FileReader will emit the load event when the data URL is ready
+        reader.addEventListener("load", () => {
+          photo.src = reader.result;
+          console.log(reader.result);
+        });
+      }
     };
 
     // const uploadCoverPhoto = () => {
@@ -269,7 +286,7 @@ export default {
     });
 
     return {
-      // coverPhoto,
+      coverPhoto,
       firstName,
       lastName,
       country,
@@ -282,8 +299,7 @@ export default {
       submitForm,
       renderCountries,
       countries,
-      // uploadCoverPhoto,
-      // inputFile,
+      uploadCoverPhoto,
     };
   },
 };
