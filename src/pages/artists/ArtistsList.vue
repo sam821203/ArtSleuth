@@ -57,6 +57,7 @@
             v-for="artist in filteredArtists"
             :id="artist.id"
             :key="artist.id"
+            :cover-photo="artist.coverPhoto"
             :first-name="artist.firstName"
             :last-name="artist.lastName"
             :country="artist.country"

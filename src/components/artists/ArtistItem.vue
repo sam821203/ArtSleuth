@@ -1,7 +1,7 @@
 <template>
   <li>
     <div>
-      <img src="" alt="" />
+      <img :src="coverPhoto" alt="" />
     </div>
     <h6>{{ country }}</h6>
     <h3>{{ fullName }}</h3>
@@ -28,7 +28,15 @@ import { computed } from "vue";
 import { useRoute } from "vue-router";
 
 export default {
-  props: ["id", "firstName", "lastName", "country", "rate", "areas"],
+  props: [
+    "id",
+    "coverPhoto",
+    "firstName",
+    "lastName",
+    "country",
+    "rate",
+    "areas",
+  ],
   setup(props) {
     const route = useRoute();
 

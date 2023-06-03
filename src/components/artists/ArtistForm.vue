@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="submitForm">
-    <div class="form-control">
+    <div class="form-control" :class="{ invalid: !firstName.isValid }">
       <div class="cover-photo">
         <img src="./default-cover-photo.png" alt="" />
         <label for="coverPhoto">Upload photo</label>
@@ -8,16 +8,15 @@
           id="coverPhoto"
           type="file"
           accept="image/jpeg, image/png, image/jpg"
-          @click="uploadCoverPhoto"
+          @input="coverPhoto.val"
+          @blur="clearValidity(firstName)"
         />
-        <!-- <output></output> -->
       </div>
     </div>
     <div class="form-control" :class="{ invalid: !firstName.isValid }">
       <label for="firstName"> First name </label>
       <input
         id="firstName"
-        ref="firstNameInput"
         v-model.trim="firstName.val"
         type="text"
         @blur="clearValidity(firstName)"
@@ -111,10 +110,16 @@
 
 <script>
 import { ref, reactive, onMounted } from "vue";
+import { ref as storageReference, uploadBytes } from "firebase/storage";
+import { storage } from "./firebase";
 
 export default {
   emits: ["save-data"],
   setup(_, context) {
+    const coverPhoto = reactive({
+      val: "",
+      isValid: true,
+    });
     const firstName = reactive({
       val: "",
       isValid: true,
@@ -143,9 +148,6 @@ export default {
     const countries = ref([]);
     const formIsValid = ref(true);
 
-    // 引用來儲存 <input> 元素的參考
-    // const firstNameInput = ref(null);
-
     // inputField 填放上面參數的 proxy 物件
     const clearValidity = (inputField) => {
       inputField.isValid = true;
@@ -154,6 +156,11 @@ export default {
     const validateForm = () => {
       // 一開始先設成 true，以防止再上一個 submit 的狀態
       formIsValid.value = true;
+
+      if (coverPhoto.val === "") {
+        coverPhoto.isValid = false;
+        formIsValid.value = false;
+      }
 
       if (firstName.val === "") {
         firstName.isValid = false;
@@ -195,6 +202,7 @@ export default {
       }
 
       const formData = {
+        photo: coverPhoto.val,
         first: firstName.val,
         last: lastName.val,
         country: country.val,
@@ -219,20 +227,26 @@ export default {
       });
     };
 
-    const uploadCoverPhoto = () => {
-      const coverPhoto = document.querySelector(".cover-photo img");
-      const input = document.querySelector("input[type='file']");
+    // const uploadCoverPhoto = () => {
+    //   const photo = document.querySelector(".cover-photo img");
+    //   const input = document.querySelector("input[type='file']");
+    //   const storageRef = storageReference(storage, "folder/test.jpg");
 
-      input.addEventListener("change", () => {
-        coverPhoto.src = URL.createObjectURL(input.files[0]);
-      });
-    };
+    //   uploadBytes(storageRef, input).then(() => {
+    //     console.log("uploaded");
+    //   });
+
+    //   input.addEventListener("change", () => {
+    //     photo.src = URL.createObjectURL(input.files[0]);
+    //   });
+    // };
 
     onMounted(() => {
       renderCountries();
     });
 
     return {
+      coverPhoto,
       firstName,
       lastName,
       country,
@@ -243,7 +257,7 @@ export default {
       clearValidity,
       validateForm,
       submitForm,
-      uploadCoverPhoto,
+      // uploadCoverPhoto,
       renderCountries,
       countries,
     };
