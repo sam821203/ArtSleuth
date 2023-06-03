@@ -7,7 +7,7 @@
     >
       <p>{{ error }}</p>
     </base-dialog>
-    <section class="hero m-top--xl">
+    <section class="hero m-top--xxl">
       <div class="text-wrap">
         <div>
           <h1>Explore your <br />Best Artist.</h1>
@@ -275,12 +275,13 @@ ul {
 }
 
 .hero h1 {
-  margin-bottom: 0;
+  margin-bottom: 4%;
   font-size: 64px;
   font-weight: 700;
+  line-height: 140%;
 }
 
 .hero p {
-  margin-bottom: 12%;
+  margin-bottom: 16%;
 }
 </style>

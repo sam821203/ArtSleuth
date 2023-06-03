@@ -1,18 +1,20 @@
 <template>
   <form @submit.prevent="submitForm">
-    <div class="form-control" :class="{ invalid: !firstName.isValid }">
+    <!-- <div class="form-control" :class="{ invalid: !firstName.isValid }">
       <div class="cover-photo">
         <img src="./default-cover-photo.png" alt="" />
         <label for="coverPhoto">Upload photo</label>
         <input
           id="coverPhoto"
+          ref="inputFile"
           type="file"
           accept="image/jpeg, image/png, image/jpg"
           @input="coverPhoto.val"
+          @click="uploadCoverPhoto"
           @blur="clearValidity(firstName)"
         />
       </div>
-    </div>
+    </div> -->
     <div class="form-control" :class="{ invalid: !firstName.isValid }">
       <label for="firstName"> First name </label>
       <input
@@ -110,16 +112,22 @@
 
 <script>
 import { ref, reactive, onMounted } from "vue";
-import { ref as storageReference, uploadBytes } from "firebase/storage";
-import { storage } from "./firebase";
+// import {
+//   ref as storageReference,
+//   uploadBytes,
+//   getDownloadURL,
+// } from "firebase/storage";
+// import storage from "../../firebase";
 
 export default {
   emits: ["save-data"],
   setup(_, context) {
-    const coverPhoto = reactive({
-      val: "",
-      isValid: true,
-    });
+    // const inputFile = ref("default-cover-photo.png");
+
+    // const coverPhoto = reactive({
+    //   val: "",
+    //   isValid: true,
+    // });
     const firstName = reactive({
       val: "",
       isValid: true,
@@ -157,10 +165,10 @@ export default {
       // 一開始先設成 true，以防止再上一個 submit 的狀態
       formIsValid.value = true;
 
-      if (coverPhoto.val === "") {
-        coverPhoto.isValid = false;
-        formIsValid.value = false;
-      }
+      // if (coverPhoto.val === "") {
+      //   coverPhoto.isValid = false;
+      //   formIsValid.value = false;
+      // }
 
       if (firstName.val === "") {
         firstName.isValid = false;
@@ -202,7 +210,7 @@ export default {
       }
 
       const formData = {
-        photo: coverPhoto.val,
+        // photo: coverPhoto.val.toString(),
         first: firstName.val,
         last: lastName.val,
         country: country.val,
@@ -230,14 +238,29 @@ export default {
     // const uploadCoverPhoto = () => {
     //   const photo = document.querySelector(".cover-photo img");
     //   const input = document.querySelector("input[type='file']");
-    //   const storageRef = storageReference(storage, "folder/test.jpg");
+    //   // const file = inputFile.value;
+    //   const storageRef = storageReference(
+    //     storage,
+    //     `cover-photos/${inputFile.value.files[0]}`
+    //   );
 
-    //   uploadBytes(storageRef, input).then(() => {
-    //     console.log("uploaded");
+    //   uploadBytes(storageRef, inputFile.value.files[0]).then(() => {
+    //     console.log("Image uploaded successfully");
+
+    //     // 獲取圖片的下載 URL
+    //     getDownloadURL(storageRef)
+    //       .then((url) => {
+    //         console.log("Download URL:", url);
+    //         // 將下載 URL 賦值給 coverPhoto.val
+    //         // coverPhoto.value = url;
+    //       })
+    //       .catch((error) => {
+    //         console.log("Image upload failed:", error);
+    //       });
     //   });
 
     //   input.addEventListener("change", () => {
-    //     photo.src = URL.createObjectURL(input.files[0]);
+    //     photo.src = URL.createObjectURL(inputFile.value.files[0]);
     //   });
     // };
 
@@ -246,7 +269,7 @@ export default {
     });
 
     return {
-      coverPhoto,
+      // coverPhoto,
       firstName,
       lastName,
       country,
@@ -257,9 +280,10 @@ export default {
       clearValidity,
       validateForm,
       submitForm,
-      // uploadCoverPhoto,
       renderCountries,
       countries,
+      // uploadCoverPhoto,
+      // inputFile,
     };
   },
 };

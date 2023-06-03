@@ -2,7 +2,7 @@ export default {
   async registerArtist(context, data) {
     const { userId } = context.rootGetters;
     const artistData = {
-      coverPhoto: data.photo,
+      // coverPhoto: data.photo,
       firstName: data.first,
       lastName: data.last,
       country: data.country,
@@ -48,7 +48,7 @@ export default {
     Object.keys(responseData).forEach((key) => {
       const artist = {
         id: key,
-        coverPhoto: responseData[key].coverPhoto,
+        // coverPhoto: responseData[key].coverPhoto,
         firstName: responseData[key].firstName,
         lastName: responseData[key].lastName,
         country: responseData[key].country,

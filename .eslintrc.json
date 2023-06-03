@@ -39,8 +39,9 @@
     "vue/html-self-closing": "off",
     "implicit-arrow-linebreak": "off",
     "operator-linebreak": ["error", "after"],
-    "import/extensions": ["error", "always"],
-    // "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    // "import/extensions": ["error", "always"],
+    "import/extensions": "off",
+    "import/no-extraneous-dependencies": "off",
     // "vue/max-attributes-per-line": [
     //   "error",
     //   {

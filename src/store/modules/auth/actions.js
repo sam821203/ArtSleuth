@@ -38,10 +38,12 @@ export default {
     }
 
     // 設定多久後會自動 logout
-    const expiresIn = Number(responseData.expiresIn * 1000);
+    const expiresIn = Number(responseData.expiresIn * 10000);
     // const expiresIn = 5000;
     const expirationDate = new Date().getTime() + expiresIn;
-
+    // console.log('token', responseData.idToken);
+    // console.log('userId', responseData.localId);
+    // console.log('tokenExpiration', expirationDate);
     // 放在 localStorage 裡
     localStorage.setItem('token', responseData.idToken);
     localStorage.setItem('userId', responseData.localId);
@@ -63,6 +65,10 @@ export default {
 
     const expiresIn = Number(tokenExpiration) - new Date().getTime();
 
+    // console.log('token', token);
+    // console.log('userId', userId);
+    // console.log('tokenExpiration', tokenExpiration);
+
     // 如果 expiresIn 小於 0，代表著 token 失效了
     if (expiresIn < 0) {
       return;
@@ -76,6 +82,7 @@ export default {
       context.commit('setUser', {
         token,
         userId,
+        tokenExpiration: null,
       });
     }
   },

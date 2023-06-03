@@ -8,7 +8,7 @@
   </router-view>
 </template>
 <script>
-import { computed, watch } from "vue";
+import { computed, watch, onMounted } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 
@@ -33,6 +33,11 @@ export default {
         router.replace("/artists");
       }
     });
+
+    onMounted(() => {
+      keepLogin();
+    });
+
     return { didAutoLogout, keepLogin };
   },
 };
@@ -47,16 +52,52 @@ export default {
   --primary-light-gray: #eee;
 }
 
-* {
+/*
+  Josh's Custom CSS Reset
+  https://www.joshwcomeau.com/css/custom-css-reset/
+*/
+*,
+*::before,
+*::after {
   box-sizing: border-box;
+  margin: 0;
 }
 
-html {
+html,
+body {
+  height: 100%;
   font-family: Poppins, sans-serif;
 }
 
 body {
-  margin: 0;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
 }
 
 .d-flex {
@@ -93,6 +134,14 @@ body {
 
 .m-top--xl {
   margin-top: 10%;
+}
+
+.m-top--xxl {
+  margin-top: 14%;
+}
+
+.m-top--3xl {
+  margin-top: 18%;
 }
 
 img {
