@@ -1,15 +1,17 @@
 <template>
-  <form @submit.prevent="submitForm">
+  <form class="layout--main m-top--md" @submit.prevent="submitForm">
     <div class="form-control" :class="{ invalid: !coverPhoto.isValid }">
       <div class="cover-photo">
-        <img src="./default-cover-photo.png" alt="" />
+        <div class="img-wrap">
+          <img src="./default-cover-photo.png" alt="" />
+        </div>
         <label for="coverPhoto">Upload photo</label>
         <input
           id="coverPhoto"
           ref="coverPhoto"
           type="file"
           accept="image/jpeg, image/png, image/jpg"
-          @change="uploadCoverPhoto"
+          @change="handleCoverPhotoChange"
           @blur="clearValidity(coverPhoto)"
         />
       </div>
@@ -50,6 +52,18 @@
         </option>
       </select>
     </div>
+    <div class="form-control" :class="{ invalid: !birthday.isValid }">
+      <label for="birthday"> Birthday </label>
+      <input
+        id="birthday"
+        v-model.trim="birthday.val"
+        type="date"
+        name="birthday"
+        @change="handleBirthdayOutput"
+        @blur="clearValidity(birthday)"
+      />
+      <p v-if="!description.isValid">Description must not be empty!</p>
+    </div>
     <div class="form-control" :class="{ invalid: !description.isValid }">
       <label for="description"> Description </label>
       <textarea
@@ -72,6 +86,26 @@
     </div>
     <div class="form-control" :class="{ invalid: !areas.isValid }">
       <h3>Areas of Expertise</h3>
+      <div>
+        <input
+          id="limitedEdition"
+          v-model="areas.val"
+          type="checkbox"
+          value="limitedEdition"
+          @blur="clearValidity(areas)"
+        />
+        <label for="limitedEdition"> limited-edition </label>
+      </div>
+      <div>
+        <input
+          id="unique"
+          v-model="areas.val"
+          type="checkbox"
+          value="unique"
+          @blur="clearValidity(areas)"
+        />
+        <label for="unique"> Unique </label>
+      </div>
       <div>
         <input
           id="painting"
@@ -111,6 +145,7 @@
 
 <script>
 import { ref, reactive, onMounted } from "vue";
+
 // import {
 //   ref as storageReference,
 //   uploadBytes,
@@ -121,8 +156,6 @@ import { ref, reactive, onMounted } from "vue";
 export default {
   emits: ["save-data"],
   setup(_, context) {
-    // const coverPhoto = ref(null);
-
     const coverPhoto = reactive({
       val: "",
       isValid: true,
@@ -136,6 +169,10 @@ export default {
       isValid: true,
     });
     const country = reactive({
+      val: "",
+      isValid: true,
+    });
+    const birthday = reactive({
       val: "",
       isValid: true,
     });
@@ -154,6 +191,23 @@ export default {
 
     const countries = ref([]);
     const formIsValid = ref(true);
+
+    const handleCoverPhotoChange = (event) => {
+      const photo = document.querySelector(".cover-photo img");
+      const imageFile = event.target.files[0];
+
+      if (imageFile) {
+        const reader = new FileReader();
+
+        reader.readAsDataURL(imageFile);
+
+        // FileReader will emit the load event when the data URL is ready
+        reader.addEventListener("load", () => {
+          photo.src = reader.result;
+          coverPhoto.val = reader.result;
+        });
+      }
+    };
 
     // inputField 填放上面參數的 proxy 物件
     const clearValidity = (inputField) => {
@@ -184,6 +238,11 @@ export default {
         formIsValid.value = false;
       }
 
+      if (birthday.val === "") {
+        birthday.isValid = false;
+        formIsValid.value = false;
+      }
+
       if (description.val === "") {
         description.isValid = false;
         formIsValid.value = false;
@@ -207,12 +266,12 @@ export default {
       if (!formIsValid.value) {
         return;
       }
-
       const formData = {
         photo: coverPhoto.val,
         first: firstName.val,
         last: lastName.val,
         country: country.val,
+        birthday: birthday.val,
         desc: description.val,
         rate: rate.val,
         areas: areas.val,
@@ -234,53 +293,6 @@ export default {
       });
     };
 
-    const uploadCoverPhoto = (event) => {
-      const photo = document.querySelector(".cover-photo img");
-      const imageFile = event.target.files[0];
-
-      if (imageFile) {
-        const reader = new FileReader();
-
-        // Convert the image file to a string
-        reader.readAsDataURL(imageFile);
-
-        // FileReader will emit the load event when the data URL is ready
-        reader.addEventListener("load", () => {
-          photo.src = reader.result;
-          console.log(reader.result);
-        });
-      }
-    };
-
-    // const uploadCoverPhoto = () => {
-    //   const photo = document.querySelector(".cover-photo img");
-    //   const input = document.querySelector("input[type='file']");
-    //   // const file = inputFile.value;
-    //   const storageRef = storageReference(
-    //     storage,
-    //     `cover-photos/${inputFile.value.files[0]}`
-    //   );
-
-    //   uploadBytes(storageRef, inputFile.value.files[0]).then(() => {
-    //     console.log("Image uploaded successfully");
-
-    //     // 獲取圖片的下載 URL
-    //     getDownloadURL(storageRef)
-    //       .then((url) => {
-    //         console.log("Download URL:", url);
-    //         // 將下載 URL 賦值給 coverPhoto.val
-    //         // coverPhoto.value = url;
-    //       })
-    //       .catch((error) => {
-    //         console.log("Image upload failed:", error);
-    //       });
-    //   });
-
-    //   input.addEventListener("change", () => {
-    //     photo.src = URL.createObjectURL(inputFile.value.files[0]);
-    //   });
-    // };
-
     onMounted(() => {
       renderCountries();
     });
@@ -290,6 +302,7 @@ export default {
       firstName,
       lastName,
       country,
+      birthday,
       description,
       rate,
       areas,
@@ -299,7 +312,7 @@ export default {
       submitForm,
       renderCountries,
       countries,
-      uploadCoverPhoto,
+      handleCoverPhotoChange,
     };
   },
 };
@@ -337,16 +350,10 @@ input[type="checkbox"] + label {
 input,
 textarea {
   display: block;
+  margin-bottom: 2%;
   width: 100%;
   border: 1px solid #ccc;
   font: inherit;
-}
-
-input:focus,
-textarea:focus {
-  background-color: #f0e6fd;
-  border-color: #3d008d;
-  outline: none;
 }
 
 input[type="checkbox"] {
@@ -356,7 +363,7 @@ input[type="checkbox"] {
 }
 
 input[type="checkbox"]:focus {
-  outline: #3d008d solid 1px;
+  outline: #a9a9a9 solid 1px;
 }
 
 input[type="file"] {
@@ -386,11 +393,20 @@ h3 {
   border-radius: 15px;
 }
 
+.cover-photo .img-wrap {
+  margin-bottom: 2%;
+  margin-left: auto;
+  margin-right: auto;
+  width: 180px;
+  height: 180px;
+}
+
 .cover-photo img {
   margin-top: 40px;
   margin-bottom: 30px;
-  width: 180px;
-  height: 180px;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
+  object-fit: cover;
 }
 </style>

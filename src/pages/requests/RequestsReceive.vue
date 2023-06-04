@@ -49,6 +49,7 @@ export default {
         store.getters["requests/requests"]
     );
 
+    console.log(receivedRequests);
     const hasRequests = computed(() => store.getters["requests/hasRequests"]);
 
     const loadRequests = async () => {

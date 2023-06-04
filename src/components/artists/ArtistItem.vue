@@ -1,13 +1,15 @@
 <template>
   <li>
     <div class="inner__left">
-      <div class="cover-photo">
+      <div class="img-wrap">
         <img :src="coverPhoto" alt="" />
-        <!-- <img src="./default-cover-photo.png" alt="" /> -->
       </div>
     </div>
     <div class="inner__center">
-      <h6>{{ country }}</h6>
+      <div class="born">
+        <h6>{{ country }},</h6>
+        <h6>b. {{ birthdayYear }}</h6>
+      </div>
       <h3>{{ fullName }}</h3>
       <div>
         <base-badge
@@ -24,7 +26,7 @@
           <span>${{ rate }}</span>
           /hour
         </div>
-        <div><span>39</span>requests</div>
+        <div><span>20</span>requests</div>
         <div><span>55</span>works</div>
       </div>
       <div class="actions">
@@ -48,6 +50,7 @@ export default {
     "firstName",
     "lastName",
     "country",
+    "birthday",
     "rate",
     "areas",
   ],
@@ -59,11 +62,13 @@ export default {
       () => `${route.path}/${props.id}/contact`
     );
     const artistDetailsLink = computed(() => `${route.path}/${props.id}`);
+    const birthdayYear = computed(() => props.birthday.split("-")[0]);
 
     return {
       fullName,
       artistContactLink,
       artistDetailsLink,
+      birthdayYear,
     };
   },
 };
@@ -73,19 +78,24 @@ export default {
 li {
   display: flex;
   padding: 1.75rem;
-  margin: 1rem 0;
+  margin-bottom: 2rem;
+  height: 198px;
 
   /* border: 1px solid var(--primary-light-gray); */
   border-radius: 12px;
-  box-shadow: rgba(0, 0, 0, 0.08) 0 4px 16px;
+  box-shadow: rgba(0, 0, 0, 0.06) 0 4px 12px;
+}
+
+li:first-child {
+  margin-top: 1rem;
 }
 
 li > div:first-child {
-  width: 20%;
+  width: 18%;
 }
 
 li > div:nth-child(2) {
-  width: 52%;
+  width: 54%;
 }
 
 li > div:last-child {
@@ -114,15 +124,17 @@ h6 {
   line-height: 140%;
 }
 
-.cover-photo {
-  width: auto;
-  max-width: 140px;
-  height: auto;
-  max-height: 140px;
+.img-wrap {
+  margin-left: 4%;
+  width: 140px;
+  height: 140px;
 }
 
-.cover-photo img {
+.img-wrap img {
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
+  object-fit: cover;
 }
 
 .inner__right {
@@ -152,11 +164,15 @@ h6 {
   font-weight: 500;
 }
 
-.inner__center h6 {
-  margin-bottom: 4px;
+.inner__center h3 {
+  margin-bottom: 3%;
 }
 
-.inner__center h3 {
-  margin-bottom: 16px;
+.born {
+  display: flex;
+}
+
+.born h6 {
+  margin-right: 2%;
 }
 </style>

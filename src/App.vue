@@ -125,6 +125,18 @@ h6 {
   transform: translate(0);
 }
 
+.m-top--xs {
+  margin-top: 2%;
+}
+
+.m-top--sm {
+  margin-top: 4%;
+}
+
+.m-top--md {
+  margin-top: 6%;
+}
+
 .m-top--lg {
   margin-top: 8%;
 }
@@ -156,6 +168,13 @@ img {
   opacity: 1; /* Firefox */
 }
 
+input:focus,
+textarea:focus {
+  background-color: #ededed;
+  border-color: #a9a9a9;
+  outline: none;
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:focus {
   transition: background-color 600000s 0s, color 600000s 0s;
@@ -165,5 +184,36 @@ input:-webkit-autofill:focus {
   margin-left: auto;
   margin-right: auto;
   max-width: 1080px;
+}
+
+input[type="checkbox"] {
+  display: grid;
+  margin: 0;
+  width: 1.15em;
+  height: 1.15em;
+  color: currentcolor;
+  background-color: #fff;
+  border: 0.15em solid #000;
+  border-radius: 0.15em;
+  appearance: none;
+  place-content: center;
+
+  /* font: inherit;
+  transform: translateY(-0.075em); */
+}
+
+input[type="checkbox"]::before {
+  width: 0.65em;
+  height: 0.65em;
+  box-shadow: inset 1em 1em #000;
+  transition: 120ms transform ease-in-out;
+  content: "";
+  transform: scale(0);
+  transform-origin: bottom left;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+input[type="checkbox"]:checked::before {
+  transform: scale(1);
 }
 </style>

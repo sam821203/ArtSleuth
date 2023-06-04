@@ -57,7 +57,7 @@ a:last-child {
 }
 
 .flat {
-  color: #3a0061;
+  color: #000;
   background-color: transparent;
   border: none;
 }
@@ -73,7 +73,11 @@ a:last-child {
 }
 
 .flat:hover,
-.flat:active,
+.flat:active {
+  color: #000;
+  background-color: #fff;
+}
+
 .outline:hover,
 .outline:active {
   color: #fff;

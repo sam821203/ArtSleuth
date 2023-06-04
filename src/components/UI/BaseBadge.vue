@@ -28,27 +28,23 @@ export default {
   color: #252525;
   background-color: #ccc;
   border-radius: 4px;
+  letter-spacing: 0.3px;
 }
 
-.frontend {
-  color: white;
-  background-color: #3d008d;
+.limitedEdition {
+  color: #927bdb;
+  background-color: rgba(199, 184, 248, 0.5);
 }
 
-.backend {
-  color: white;
-  background-color: #71008d;
-}
-
-.career {
-  color: white;
-  background-color: #8d006e;
+.unique {
+  color: #ef85cd;
+  background-color: rgba(255, 193, 235, 0.35);
 }
 
 .painting,
 .sculpture,
 .prints {
-  color: #927bdb;
-  background-color: rgba(199, 184, 248, 0.5);
+  color: #f2a51f;
+  background-color: rgba(255, 187, 69, 0.25);
 }
 </style>

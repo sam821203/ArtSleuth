@@ -44,8 +44,9 @@
     <section>
       <base-card>
         <div class="controls">
-          <base-button mode="outline" @click="loadArtists(true)">
-            Refresh
+          <base-button mode="flat" @click="loadArtists(true)">
+            <span>Refresh</span>
+            <img src="./refresh.svg" alt="" />
           </base-button>
         </div>
         <div v-if="isLoading">
@@ -61,6 +62,7 @@
             :first-name="artist.firstName"
             :last-name="artist.lastName"
             :country="artist.country"
+            :birthday="artist.birthday"
             :rate="artist.hourlyRate"
             :areas="artist.areas"
           />
@@ -91,6 +93,8 @@ export default {
 
     // reactive 會針對傳入的資料採用深層監聽的方式
     const activeFilters = reactive({
+      limitedEdition: true,
+      unique: true,
       painting: true,
       sculpture: true,
       prints: true,
@@ -109,6 +113,15 @@ export default {
       const artists = store.getters["artists/getArtists"];
 
       return artists.filter((artist) => {
+        if (
+          activeFiltersRef.value.limitedEdition &&
+          artist.areas.includes("limitedEdition")
+        ) {
+          return true;
+        }
+        if (activeFiltersRef.value.unique && artist.areas.includes("unique")) {
+          return true;
+        }
         if (
           activeFiltersRef.value.painting &&
           artist.areas.includes("painting")
@@ -251,7 +264,22 @@ ul {
 
 .controls {
   display: flex;
+  justify-content: end;
+}
+
+.controls button {
+  display: flex;
   justify-content: space-between;
+  align-items: center;
+  padding-left: 0;
+  padding-right: 0;
+  margin-right: 0;
+}
+
+.controls span {
+  margin-right: 2%;
+  font-size: 1rem;
+  font-weight: 500;
 }
 
 .img-wrap {

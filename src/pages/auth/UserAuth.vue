@@ -173,13 +173,6 @@ textarea {
   border-radius: 4px;
 }
 
-input:focus,
-textarea:focus {
-  background-color: #ededed;
-  border-color: #a9a9a9;
-  outline: none;
-}
-
 .user-auth {
   position: absolute;
   top: 50%;
