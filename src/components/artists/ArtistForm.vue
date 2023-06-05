@@ -84,62 +84,80 @@
       />
       <p v-if="!rate.isValid">Rate must not be empty!</p>
     </div>
-    <div class="form-control" :class="{ invalid: !areas.isValid }">
+    <div
+      class="form-control filter__options"
+      :class="{ invalid: !areas.isValid }"
+    >
       <h3>Areas of Expertise</h3>
-      <div>
-        <input
-          id="limitedEdition"
-          v-model="areas.val"
-          type="checkbox"
-          value="limitedEdition"
-          @blur="clearValidity(areas)"
-        />
-        <label for="limitedEdition"> limited-edition </label>
+      <div class="filter__option">
+        <label for="limitedEdition">
+          limited-edition
+          <input
+            id="limitedEdition"
+            v-model="areas.val"
+            type="checkbox"
+            value="limitedEdition"
+            @blur="clearValidity(areas)"
+          />
+          <span class="checkmark"></span>
+        </label>
       </div>
-      <div>
-        <input
-          id="unique"
-          v-model="areas.val"
-          type="checkbox"
-          value="unique"
-          @blur="clearValidity(areas)"
-        />
-        <label for="unique"> Unique </label>
+      <div class="filter__option">
+        <label for="unique">
+          Unique
+          <input
+            id="unique"
+            v-model="areas.val"
+            type="checkbox"
+            value="unique"
+            @blur="clearValidity(areas)"
+          />
+          <span class="checkmark"></span>
+        </label>
       </div>
-      <div>
-        <input
-          id="painting"
-          v-model="areas.val"
-          type="checkbox"
-          value="painting"
-          @blur="clearValidity(areas)"
-        />
-        <label for="painting"> Painting </label>
+      <div class="filter__option">
+        <label for="painting">
+          Painting
+          <input
+            id="painting"
+            v-model="areas.val"
+            type="checkbox"
+            value="painting"
+            @blur="clearValidity(areas)"
+          />
+          <span class="checkmark"></span>
+        </label>
       </div>
-      <div>
-        <input
-          id="sculpture"
-          v-model="areas.val"
-          type="checkbox"
-          value="sculpture"
-          @blur="clearValidity(areas)"
-        />
-        <label for="sculpture"> Sculpture </label>
+      <div class="filter__option">
+        <label for="sculpture">
+          Sculpture
+          <input
+            id="sculpture"
+            v-model="areas.val"
+            type="checkbox"
+            value="sculpture"
+            @blur="clearValidity(areas)"
+          />
+          <span class="checkmark"></span>
+        </label>
       </div>
-      <div>
-        <input
-          id="prints"
-          v-model="areas.val"
-          type="checkbox"
-          value="prints"
-          @blur="clearValidity(areas)"
-        />
-        <label for="prints"> Prints </label>
+      <div class="filter__option">
+        <label for="prints">
+          Prints
+          <input
+            id="prints"
+            v-model="areas.val"
+            type="checkbox"
+            value="prints"
+            @blur="clearValidity(areas)"
+          />
+          <span class="checkmark"></span>
+        </label>
       </div>
       <p v-if="!areas.isValid">At least one expertise must be selected!</p>
     </div>
     <p v-if="!formIsValid">Please fix above errors!</p>
-    <base-button>Register</base-button>
+    <base-button mode="cta-btn" class="m-bottom--xl">Submit form</base-button>
   </form>
 </template>
 
@@ -331,14 +349,21 @@ label {
 
 .cover-photo > label {
   display: block;
-  padding: 12px;
+  padding: 12px 0;
   margin: 10px auto;
-  width: 160px;
+  width: 120px;
+  font-size: 0.75rem;
   text-align: center;
   color: #fff;
   background: #000;
   border-radius: 4px;
   cursor: pointer;
+  font-weight: 400;
+}
+
+.filter__option label {
+  font-weight: 400;
+  margin-bottom: 1%;
 }
 
 input[type="checkbox"] + label {
@@ -408,5 +433,13 @@ h3 {
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
+}
+
+.form-control.filter__options {
+  margin-bottom: 4%;
+}
+
+button {
+  border: none;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="m-top--xl">
     <base-dialog
       title="An error occurred!"
       :show="!!error"
@@ -10,7 +10,7 @@
     <section>
       <base-card>
         <header>
-          <h2>Requests Received</h2>
+          <h2 class="m-bottom--xs">Requests Received</h2>
         </header>
         <base-spinner v-if="isLoading" />
         <ul v-else-if="hasRequests && !isLoading">

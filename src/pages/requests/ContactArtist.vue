@@ -9,8 +9,8 @@
       <textarea id="message" v-model.trim="message" rows="5" />
     </div>
     <p v-if="!formIsValid" class="errors">Please enter valid email!</p>
-    <div class="actions">
-      <base-button>Send Message</base-button>
+    <div class="actions m-bottom--xs">
+      <base-button mode="emphasis">Send Message</base-button>
     </div>
   </form>
 </template>
@@ -65,13 +65,13 @@ export default {
 <style scoped>
 form {
   padding: 1rem;
-  margin: 1rem;
+  margin: 1rem 0;
   border: 1px solid #ccc;
-  border-radius: 12px;
+  border-radius: var(--primary-border-radius);
 }
 
 .form-control {
-  margin: 0.5rem 0;
+  margin: 0.5rem 0 1rem;
 }
 
 label {
@@ -87,13 +87,7 @@ textarea {
   width: 100%;
   border: 1px solid #ccc;
   font: inherit;
-}
-
-input:focus,
-textarea:focus {
-  background-color: #faf6ff;
-  border-color: #3d008d;
-  outline: none;
+  border-radius: var(--primary-border-radius);
 }
 
 .errors {
@@ -103,5 +97,12 @@ textarea:focus {
 
 .actions {
   text-align: center;
+}
+
+.actions button {
+  padding: 0 1.5rem;
+  width: auto;
+  max-width: 170px;
+  height: 44px;
 }
 </style>

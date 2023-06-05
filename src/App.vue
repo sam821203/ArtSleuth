@@ -50,6 +50,8 @@ export default {
   /* --primary: Aquamarine; */
   --primary-deep-gray: rgb(31, 31, 31);
   --primary-light-gray: #eee;
+  --primary: #c7b8f8;
+  --primary-border-radius: 4px;
 }
 
 /*
@@ -153,6 +155,22 @@ h6 {
   margin-top: 18%;
 }
 
+.m-bottom--xxs {
+  margin-bottom: 1%;
+}
+
+.m-bottom--xs {
+  margin-bottom: 2%;
+}
+
+.m-bottom--sm {
+  margin-bottom: 4%;
+}
+
+.m-bottom--xl {
+  margin-bottom: 10%;
+}
+
 img {
   max-width: 100%;
   height: auto;
@@ -166,6 +184,15 @@ img {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: #ccc;
   opacity: 1; /* Firefox */
+}
+
+.filter__option input {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  vertical-align: middle;
+  cursor: pointer;
 }
 
 input:focus,
@@ -186,34 +213,61 @@ input:-webkit-autofill:focus {
   max-width: 1080px;
 }
 
-input[type="checkbox"] {
-  display: grid;
-  margin: 0;
-  width: 1.15em;
-  height: 1.15em;
-  color: currentcolor;
-  background-color: #fff;
-  border: 0.15em solid #000;
-  border-radius: 0.15em;
-  appearance: none;
-  place-content: center;
-
-  /* font: inherit;
-  transform: translateY(-0.075em); */
+.filter__option {
+  position: relative;
+  display: block;
+  margin-right: 1rem;
+  cursor: pointer;
+  user-select: none;
 }
 
-input[type="checkbox"]::before {
-  width: 0.65em;
-  height: 0.65em;
-  box-shadow: inset 1em 1em #000;
-  transition: 120ms transform ease-in-out;
+.filter__option label {
+  margin-left: 1.85rem;
+  cursor: pointer;
+}
+
+.filter__option.active label {
+  font-weight: bold;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: 24px;
+  background-color: transparent;
+  border: 1px solid #c7b8f8;
+}
+
+.filter__option:hover input ~ .checkmark {
+  background-color: transparent;
+}
+
+.filter__option input:checked ~ .checkmark {
+  border: 1px solid #c7b8f8;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark::after {
   content: "";
-  transform: scale(0);
-  transform-origin: bottom left;
-  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+  position: absolute;
+  display: none;
 }
 
-input[type="checkbox"]:checked::before {
-  transform: scale(1);
+/* Style the checkmark/indicator */
+.filter__option .checkmark::after {
+  top: 3.8px;
+  left: 7.4px;
+  width: 7.4px;
+  height: 12px;
+  border: solid #c7b8f8;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+/* Show the checkmark when checked */
+.filter__option input:checked ~ .checkmark::after {
+  display: block;
 }
 </style>

@@ -158,7 +158,7 @@ h6 {
 }
 
 .inner__right .extra-info > div span {
-  margin-right: 4px;
+  margin-right: 3px;
   font-size: 1.25rem;
   color: #000;
   font-weight: 500;

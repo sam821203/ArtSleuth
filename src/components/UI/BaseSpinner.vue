@@ -39,7 +39,7 @@
   margin: -4px 0 0 -4px;
   width: 7px;
   height: 7px;
-  background: #3d008d;
+  background-color: var(--primary);
   border-radius: 50%;
   content: " ";
 }

@@ -43,6 +43,7 @@ a {
   border-radius: 0.25rem;
   transition: all 0.3s ease;
   cursor: pointer;
+  letter-spacing: 0.2px;
 }
 
 a:hover,
@@ -82,6 +83,18 @@ a:last-child {
 .outline:active {
   color: #fff;
   background-color: #000;
+}
+
+.emphasis {
+  width: 126px;
+  height: 42px;
+  font-size: 1rem;
+  text-align: center;
+  color: #fff;
+  background-color: #000;
+  border: none;
+  border-radius: 4px;
+  line-height: 130%;
 }
 
 .cta-btn {

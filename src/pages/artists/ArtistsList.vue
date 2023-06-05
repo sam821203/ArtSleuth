@@ -12,8 +12,9 @@
         <div>
           <h1>Explore your <br />Best Artist.</h1>
           <p>
-            Discover the remarkable potential of ArtSleuth. See what you can do
-            on ArtSleuth - the best tool for artist finder.
+            Experience the unparalleled features and functionalities of
+            ArtSleuth, your gateway to the vibrant world of art - the best tool
+            for artist finder.
           </p>
         </div>
         <div>
@@ -29,12 +30,21 @@
             v-if="isLoggedIn && !isArtist && !isLoading"
             link
             to="/register"
+            class="cta-btn"
           >
-            Register
+            Register now
+          </base-button>
+          <base-button
+            v-if="isLoggedIn && isArtist && !isLoading"
+            link
+            to="/register"
+            class="cta-btn"
+          >
+            Explore more
           </base-button>
         </div>
       </div>
-      <div class="img-wrap m-top--xl">
+      <div class="img-wrap m-top--sm">
         <img src="./hero-character.svg" alt="" />
       </div>
     </section>
@@ -265,6 +275,7 @@ ul {
 .controls {
   display: flex;
   justify-content: end;
+  opacity: 0.6;
 }
 
 .controls button {
@@ -304,6 +315,8 @@ ul {
 }
 
 .hero p {
-  margin-bottom: 16%;
+  margin-bottom: 8%;
+  line-height: 180%;
+  letter-spacing: 0.1px;
 }
 </style>

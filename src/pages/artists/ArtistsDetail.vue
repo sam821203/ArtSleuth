@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="layout--main m-top--xl">
     <section>
       <base-card>
         <h2>{{ fullName }}</h2>
@@ -7,29 +7,37 @@
       </base-card>
     </section>
 
-    <!-- Contact -->
-    <section>
-      <header>
-        <base-card>
-          <h2>Interested? Reach out now!</h2>
-          <base-button link :to="contactLink"> Contact </base-button>
-          <!-- 這裡放 nested 的 contact form -->
-          <router-view />
-        </base-card>
-      </header>
-    </section>
-
     <!-- Badge -->
-    <section>
+    <section class="badge">
       <base-card>
         <base-badge
           v-for="area in areas"
           :key="area"
           :type="area"
           :title="area"
+          class="m-bottom--xxs"
         />
         <p>{{ description }}</p>
       </base-card>
+    </section>
+
+    <!-- Contact -->
+    <section>
+      <header>
+        <base-card>
+          <h3 class="m-bottom--xxs">Interested? Reach out now!</h3>
+          <base-button
+            link
+            :to="contactLink"
+            mode="emphasis"
+            class="m-bottom--sm"
+          >
+            Contact
+          </base-button>
+          <!-- 這裡放 nested 的 contact form -->
+          <router-view />
+        </base-card>
+      </header>
     </section>
   </div>
 </template>
@@ -59,7 +67,7 @@ export default {
     const rate = computed(() => selectedArtist.value?.hourlyRate);
     const description = computed(() => selectedArtist.value?.description);
     const contactLink = computed(
-      () => `${router.currentRoute.value.path}/${props.id}/contact`
+      () => `${router.currentRoute.value.path}/contact`
     );
 
     // onMounted Hooks 來代替 Vue 2 中的 created Hooks，確保在组件掛載後執行相關邏輯
