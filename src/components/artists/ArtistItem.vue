@@ -1,5 +1,8 @@
 <template>
   <li>
+    <div>
+      <img src="" alt="" />
+    </div>
     <h6>{{ country }}</h6>
     <h3>{{ fullName }}</h3>
     <h4>${{ rate }}/hour</h4>

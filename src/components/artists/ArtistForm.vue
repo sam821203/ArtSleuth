@@ -1,5 +1,18 @@
 <template>
   <form @submit.prevent="submitForm">
+    <div class="form-control">
+      <div class="cover-photo">
+        <img src="./default-cover-photo.png" alt="" />
+        <label for="coverPhoto">Upload photo</label>
+        <input
+          id="coverPhoto"
+          type="file"
+          accept="image/jpeg, image/png, image/jpg"
+          @click="uploadCoverPhoto"
+        />
+        <!-- <output></output> -->
+      </div>
+    </div>
     <div class="form-control" :class="{ invalid: !firstName.isValid }">
       <label for="firstName"> First name </label>
       <input
@@ -206,6 +219,15 @@ export default {
       });
     };
 
+    const uploadCoverPhoto = () => {
+      const coverPhoto = document.querySelector(".cover-photo img");
+      const input = document.querySelector("input[type='file']");
+
+      input.addEventListener("change", () => {
+        coverPhoto.src = URL.createObjectURL(input.files[0]);
+      });
+    };
+
     onMounted(() => {
       renderCountries();
     });
@@ -221,52 +243,11 @@ export default {
       clearValidity,
       validateForm,
       submitForm,
+      uploadCoverPhoto,
       renderCountries,
       countries,
     };
   },
-  // methods: {
-  //   // validateForm() {
-  //   //   // 一開始先設成 true，以防止再上一個 submit 的狀態
-  //   //   this.formIsValid = true;
-  //   //   if (this.firstName.val === "") {
-  //   //     this.firstName.isValid = false;
-  //   //     this.formIsValid = false;
-  //   //   }
-  //   //   if (this.lastName.val === "") {
-  //   //     this.lastName.isValid = false;
-  //   //     this.formIsValid = false;
-  //   //   }
-  //   //   if (this.description.val === "") {
-  //   //     this.description.isValid = false;
-  //   //     this.formIsValid = false;
-  //   //   }
-  //   //   if (!this.rate.val || this.rate.val < 0) {
-  //   //     this.rate.isValid = false;
-  //   //     this.formIsValid = false;
-  //   //   }
-  //   //   if (this.areas.val.length === 0) {
-  //   //     this.areas.isValid = false;
-  //   //     this.formIsValid = false;
-  //   //   }
-  //   // },
-  //   // submitForm() {
-  //   //   // 呼叫 validateForm 方法
-  //   //   this.validateForm();
-  //   //   // 如果 form 沒有被 validate，就 return 回去，以停止之後的動作
-  //   //   if (!this.formIsValid) {
-  //   //     return;
-  //   //   }
-  //   //   const formData = {
-  //   //     first: this.firstName.val,
-  //   //     last: this.lastName.val,
-  //   //     desc: this.description.val,
-  //   //     rate: this.rate.val,
-  //   //     areas: this.areas.val,
-  //   //   };
-  //   //   this.$emit("save-data", formData);
-  //   // },
-  // },
 };
 </script>
 
@@ -279,6 +260,18 @@ label {
   font-weight: bold;
   display: block;
   margin-bottom: 0.5rem;
+}
+
+.cover-photo > label {
+  display: block;
+  padding: 12px;
+  margin: 10px auto;
+  width: 160px;
+  text-align: center;
+  color: #fff;
+  background: #000;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 input[type="checkbox"] + label {
@@ -312,6 +305,10 @@ input[type="checkbox"]:focus {
   outline: #3d008d solid 1px;
 }
 
+input[type="file"] {
+  display: none;
+}
+
 h3 {
   margin: 0.5rem 0;
   font-size: 1rem;
@@ -324,5 +321,22 @@ h3 {
 .invalid input,
 .invalid textarea {
   border: 1px solid red;
+}
+
+.circle-card {
+  padding: 40px;
+  width: 400px;
+  text-align: center;
+  color: #333;
+  background-color: #fff;
+  border-radius: 15px;
+}
+
+.cover-photo img {
+  margin-top: 40px;
+  margin-bottom: 30px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
 }
 </style>
