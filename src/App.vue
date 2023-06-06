@@ -1,5 +1,4 @@
 <template>
-  <!-- 在痊癒可以不要加幣和標籤，加 '/' 即可。在 DOM 模板中，就必須使用閉合標籤 -->
   <the-header />
   <router-view v-slot="slotProps">
     <transition name="route" mode="out-in">
@@ -47,7 +46,6 @@ export default {
 @import "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap";
 
 :root {
-  /* --primary: Aquamarine; */
   --primary-deep-gray: rgb(31, 31, 31);
   --primary-light-gray: #eee;
   --primary: #c7b8f8;
@@ -269,5 +267,9 @@ input:-webkit-autofill:focus {
 /* Show the checkmark when checked */
 .filter__option input:checked ~ .checkmark::after {
   display: block;
+}
+
+.warning {
+  color: red;
 }
 </style>

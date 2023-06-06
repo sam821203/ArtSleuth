@@ -80,10 +80,9 @@ li {
   padding: 1.75rem;
   margin-bottom: 2rem;
   height: 198px;
-
-  /* border: 1px solid var(--primary-light-gray); */
   border-radius: 12px;
-  box-shadow: rgba(0, 0, 0, 0.06) 0 4px 12px;
+  box-shadow: rgba(0, 0, 0, 0.08) 0 4px 12px;
+  transition: all 0.2s ease;
 }
 
 li:first-child {
@@ -100,6 +99,10 @@ li > div:nth-child(2) {
 
 li > div:last-child {
   width: 28%;
+}
+
+li:hover {
+  box-shadow: rgba(0, 0, 0, 0.06) 0 10px 20px;
 }
 
 h3 {

@@ -25,12 +25,15 @@
     <section>
       <header>
         <base-card>
-          <h3 class="m-bottom--xxs">Interested? Reach out now!</h3>
+          <h3 v-if="!isContactRoute" class="m-bottom--xxs">
+            Interested? Reach out now!
+          </h3>
           <base-button
+            v-if="!isContactRoute"
             link
             :to="contactLink"
             mode="emphasis"
-            class="m-bottom--sm"
+            class="contact m-bottom--sm"
           >
             Contact
           </base-button>
@@ -53,6 +56,10 @@ export default {
     const selectedArtist = ref(null);
     const router = useRouter();
     const store = useStore();
+    const currentPath = router.currentRoute.value.path;
+
+    // const isContactRoute = ref(false);
+    // const contactRoute = ref("");
 
     const fullName = computed(() => {
       if (selectedArtist.value) {
@@ -66,9 +73,8 @@ export default {
     const areas = computed(() => selectedArtist.value?.areas);
     const rate = computed(() => selectedArtist.value?.hourlyRate);
     const description = computed(() => selectedArtist.value?.description);
-    const contactLink = computed(
-      () => `${router.currentRoute.value.path}/contact`
-    );
+    const contactLink = computed(() => `${currentPath}/contact`);
+    const isContactRoute = computed(() => currentPath.includes("/contact"));
 
     // onMounted Hooks 來代替 Vue 2 中的 created Hooks，確保在组件掛載後執行相關邏輯
     onMounted(() => {
@@ -84,6 +90,7 @@ export default {
       rate,
       description,
       contactLink,
+      isContactRoute,
     };
   },
 };

@@ -27,7 +27,7 @@
             placeholder="12345678"
           />
         </div>
-        <p v-if="!formIsValid">
+        <p v-if="!formIsValid" class="warning">
           Please enter a valid email and password! (Must be at least 6
           characters long.)
         </p>
@@ -58,7 +58,7 @@ export default {
 
     const email = ref("");
     const password = ref("");
-    const mode = ref("login");
+    const mode = ref("signup");
     const formIsValid = ref(true);
     const isLoading = ref(false);
     const error = ref(null);

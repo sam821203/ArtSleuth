@@ -37,7 +37,7 @@
           <base-button
             v-if="isLoggedIn && isArtist && !isLoading"
             link
-            to="/register"
+            to="/artists"
             class="cta-btn"
           >
             Explore more
@@ -191,78 +191,6 @@ export default {
     };
   },
 };
-
-// vue2 =================================================================
-// import ArtistItem from "../../components/artists/ArtistItem.vue";
-// import ArtistFilter from "../../components/artists/ArtistFilter.vue";
-
-// export default {
-//   components: {
-//     ArtistItem,
-//     ArtistFilter,
-//   },
-//   data() {
-//     return {
-//       isLoading: false,
-//       error: null,
-//       activeFilters: {
-//         frontend: true,
-//         backend: true,
-//         career: true,
-//       },
-//     };
-//   },
-//   computed: {
-//     isLoggedIn() {
-//       return this.$store.getters.isAuthenticated;
-//     },
-//     isArtist() {
-//       return this.$store.getters["artists/isArtist"];
-//     },
-//     filteredArtists() {
-//       const artists = this.$store.getters["artists/getArtists"];
-//       return artists.filter((artist) => {
-//         if (this.activeFilters.frontend && artist.areas.includes("frontend")) {
-//           return true;
-//         }
-//         if (this.activeFilters.backend && artist.areas.includes("backend")) {
-//           return true;
-//         }
-//         if (this.activeFilters.career && artist.areas.includes("career")) {
-//           return true;
-//         }
-//         return false;
-//       });
-//     },
-//     hasArtists() {
-//       return !this.isLoading && this.$store.getters["artists/hasArtists"];
-//     },
-//   },
-//   created() {
-//     this.loadArtists();
-//   },
-//   methods: {
-//     setFilters(updatedFilters) {
-//       this.activeFilters = updatedFilters;
-//     },
-//     async loadArtists(refresh = false) {
-//       this.isLoading = true;
-//       try {
-//         await this.$store.dispatch("artists/loadArtists", {
-//           forceRefresh: refresh,
-//         });
-//       } catch (error) {
-//         this.error = error.message || "Something went wrong!";
-//       }
-
-//       // 當 loading 完成，轉換狀態
-//       this.isLoading = false;
-//     },
-//     handleError() {
-//       this.error = null;
-//     },
-//   },
-// };
 </script>
 
 <style scoped>
